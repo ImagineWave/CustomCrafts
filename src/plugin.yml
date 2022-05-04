@@ -1,0 +1,8 @@
+name: StrmineCustomCrafts
+main: CustomCrafts.Main
+description: Strmine custom crafts
+version: 1.0
+api-version: 1.13
+commands:
+    givecustomitem:
+        usage:
