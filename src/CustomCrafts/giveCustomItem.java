@@ -122,7 +122,7 @@ public class giveCustomItem implements CommandExecutor{
 	        
 	        ItemStack destroyer = new ItemStack(Material.GOLDEN_SHOVEL);
 	        ItemMeta destroyerMeta = destroyer.getItemMeta();
-	        destroyerMeta.setDisplayName("§6Разрушитель");
+	        destroyerMeta.setDisplayName("§5Разрушитель");
 	        List<String> destroyerLore = new ArrayList<String>();
 	        destroyerLore.add("Уничтожет любой блок");
 	        destroyerLore.add("§eОсталось зарядов");
@@ -306,7 +306,7 @@ public class giveCustomItem implements CommandExecutor{
 			case("destroyer"):{
 				ItemStack item = new ItemStack(Material.GOLDEN_SHOVEL);
 		        ItemMeta meta = item.getItemMeta();
-		        meta.setDisplayName("§6Разрушитель");
+		        meta.setDisplayName("§5Разрушитель");
 		        List<String> lore = new ArrayList<String>();
 		        lore.add("Уничтожет любой блок");
 		        lore.add("§eОсталось зарядов");
@@ -320,7 +320,7 @@ public class giveCustomItem implements CommandExecutor{
 			case("destroyer*"):{
 				ItemStack item = new ItemStack(Material.GOLDEN_SHOVEL);
 		        ItemMeta meta = item.getItemMeta();
-		        meta.setDisplayName("§6Разрушитель");
+		        meta.setDisplayName("§5Разрушитель");
 		        List<String> lore = new ArrayList<String>();
 		        lore.add("Уничтожет любой блок");
 		        lore.add("§eОсталось зарядов");

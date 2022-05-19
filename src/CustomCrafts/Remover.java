@@ -27,7 +27,7 @@ public class Remover implements Listener{
 		ItemStack item = e.getPlayer().getInventory().getItemInMainHand();
 		if(!item.getItemMeta().hasDisplayName()) return;
 		if(!item.getItemMeta().hasLore()) return;
-		if(!item.getItemMeta().getDisplayName().equals("§6Разрушитель")) return;
+		if(!item.getItemMeta().getDisplayName().equals("§5Разрушитель")) return;
 		if(!item.getItemMeta().getLore().get(0).equals("Уничтожет любой блок")) return;
 		if(p.getInventory().getItemInOffHand().getType() == Material.DRAGON_BREATH) {
 			if(recharged(p,item)) {
