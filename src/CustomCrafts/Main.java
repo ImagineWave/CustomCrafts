@@ -34,6 +34,8 @@ private static Main instance;
 		Bukkit.getServer().getPluginManager().registerEvents(new UslessShit(this), this);
 		Bukkit.getServer().getPluginManager().registerEvents(new Remover(this), this);
 		Bukkit.getServer().getPluginManager().registerEvents(new StrongAxe2(this), this);
+		Bukkit.getServer().getPluginManager().registerEvents(new CustomCrafts.relocator.RelocatorGUIListener(this), this);
+		Bukkit.getServer().getPluginManager().registerEvents(new CustomCrafts.relocator.RelocatorOpenGUIandCharge(this), this);
 		
 		//BukkitTask globalCheck = new StrongAxe(this).runTaskTimer(this, 0, 30L);
 		
@@ -364,6 +366,28 @@ private static Main instance;
 		List<String> lore = new ArrayList<String>();
 		lore.add("Дорого? А все потому что");
 		lore.add("невидимый свет это роскошь");
+		meta.setLore(lore);
+		item.setItemMeta(meta);
+		
+		NamespacedKey itemKey = new NamespacedKey(this, "light_key");
+		ShapedRecipe itemRecipe = new ShapedRecipe(itemKey, item);
+		itemRecipe.shape(" A ","BCB"," A ");
+		itemRecipe.setIngredient('A', Material.CANDLE);
+		itemRecipe.setIngredient('C', Material.SEA_LANTERN);
+		itemRecipe.setIngredient('B', Material.GLOW_BERRIES);
+		
+		Bukkit.getServer().addRecipe(itemRecipe);
+	}
+	public void craftRelocator() {
+		ItemStack item = new ItemStack(Material.NETHER_STAR);
+		ItemMeta meta = item.getItemMeta();
+		meta.setDisplayName("§5§lЭ.П.У.П.Т.");
+		List<String> lore = new ArrayList<String>();
+		lore.add("Экспериментальное портативное устройство");
+		lore.add("пространственного туннелирования");
+		lore.add("§eОсталось зарядов");
+		lore.add("0");
+		lore.add("Точка не выбрана");
 		meta.setLore(lore);
 		item.setItemMeta(meta);
 		

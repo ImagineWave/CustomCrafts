@@ -7,9 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockState;
 import org.bukkit.block.EndGateway;
-import org.bukkit.block.data.BlockData;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -21,7 +19,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import Plugin.Main;
+import CustomCrafts.Main;
 import net.md_5.bungee.api.ChatColor;
 
 public class RelocatorOpenGUIandCharge implements Listener {
@@ -39,7 +37,7 @@ public class RelocatorOpenGUIandCharge implements Listener {
 	if(!item.getItemMeta().hasLore()) return;
 	if(!item.getItemMeta().getLore().get(0).equals("Экспериментальное портативное устройство")) return;
 	if(!item.getItemMeta().getLore().get(1).equals("пространственного туннелирования")) return;
-	//chronos(p);
+	
 	}
 	private boolean isCharged(Player p) {
 		ItemStack item = p.getInventory().getItemInMainHand();
@@ -62,20 +60,50 @@ public class RelocatorOpenGUIandCharge implements Listener {
 		ItemStack yellowItem = new ItemStack(Material.YELLOW_CONCRETE);
 		ItemStack greenItem = new ItemStack(Material.LIME_CONCRETE);
 		
+		ItemStack redFlagItem = new ItemStack(Material.RED_BANNER);
+		ItemStack blueFlagItem = new ItemStack(Material.BLUE_BANNER);
+		ItemStack yellowFlagItem = new ItemStack(Material.YELLOW_BANNER);
+		ItemStack greenFlagItem = new ItemStack(Material.LIME_BANNER);
+		
 		ItemMeta redMeta = redItem.getItemMeta();
 		ItemMeta blueMeta = blueItem.getItemMeta();
 		ItemMeta yellowMeta = yellowItem.getItemMeta();
 		ItemMeta greenMeta = greenItem.getItemMeta();
+		
+		ItemMeta redFlagMeta = redFlagItem.getItemMeta();
+		ItemMeta blueFlagMeta = blueFlagItem.getItemMeta();
+		ItemMeta yellowFlagMeta = yellowFlagItem.getItemMeta();
+		ItemMeta greenFlagMeta = greenFlagItem.getItemMeta();
 		
 		redMeta.setDisplayName(locToDisplayName(redLoc));
 		blueMeta.setDisplayName(locToDisplayName(blueLoc));
 		yellowMeta.setDisplayName(locToDisplayName(yellowLoc));
 		greenMeta.setDisplayName(locToDisplayName(greenLoc));
 		
+		redFlagMeta.setDisplayName("Установить "+ ChatColor.RED +"КРУСНУЮ "+ChatColor.RESET+"точку");
+		blueFlagMeta.setDisplayName("Установить "+ ChatColor.BLUE +"СИНЮЮ "+ChatColor.RESET+"точку");
+		yellowFlagMeta.setDisplayName("Установить "+ ChatColor.YELLOW +"ЖЁЛТУЮ "+ChatColor.RESET+"точку");
+		greenFlagMeta.setDisplayName("Установить "+ ChatColor.GREEN +"ЗЕЛЁНУЮ "+ChatColor.RESET+"точку");
+		
 		redItem.setItemMeta(redMeta);
 		blueItem.setItemMeta(blueMeta);
 		yellowItem.setItemMeta(yellowMeta);
 		greenItem.setItemMeta(greenMeta);
+		
+		redFlagItem.setItemMeta(redFlagMeta);
+		blueFlagItem.setItemMeta(blueFlagMeta);
+		yellowFlagItem.setItemMeta(yellowFlagMeta);
+		greenFlagItem.setItemMeta(greenFlagMeta);
+		
+		gui.setItem(1, redItem);
+		gui.setItem(2, blueItem);
+		gui.setItem(3, yellowItem);
+		gui.setItem(4, greenItem);
+		
+		gui.setItem(1, redFlagItem);
+		gui.setItem(2, blueFlagItem);
+		gui.setItem(3, yellowFlagItem);
+		gui.setItem(4, greenFlagItem);
 	}
 	private String locToDisplayName(Location loc) {
 		String result = "";
@@ -125,11 +153,10 @@ public class RelocatorOpenGUIandCharge implements Listener {
 			e1.printStackTrace();
 		}
 	 }
-	private Block createPortal(Location start, Location exit) {
+	private void createPortal(Location start, Location exit) {
 		Block portal = start.getBlock();
-		portal.setType(Material.END_GATEWAY);
-		EndGateway portalData = (EndGateway) portal.getState(); //TODO СУПЕР ПРОБЛЕМНАЯ ХЕРНЯ, КОТОРАЯ НИХЕРА НЕ БУДЕТ РАБОТАТЬ
-		portalData.setExitLocation(exit);
-		return portal;
+		EndGateway gate = (EndGateway) portal.getState();
+		gate.setExitLocation(exit);
+		gate.setExactTeleport(false);
 	}
 }
