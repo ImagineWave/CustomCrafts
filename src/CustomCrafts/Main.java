@@ -59,6 +59,7 @@ private static Main instance;
 		craftStrongAxe();
 		craftRemover();
 		craftLight();
+		craftRelocator();
 		}
 	
 	public void onDisable(){
@@ -391,12 +392,16 @@ private static Main instance;
 		meta.setLore(lore);
 		item.setItemMeta(meta);
 		
-		NamespacedKey itemKey = new NamespacedKey(this, "light_key");
+		NamespacedKey itemKey = new NamespacedKey(this, "relocator_key");
 		ShapedRecipe itemRecipe = new ShapedRecipe(itemKey, item);
-		itemRecipe.shape(" A ","BCB"," A ");
-		itemRecipe.setIngredient('A', Material.CANDLE);
-		itemRecipe.setIngredient('C', Material.SEA_LANTERN);
-		itemRecipe.setIngredient('B', Material.GLOW_BERRIES);
+		itemRecipe.shape("RIB","DSD","YIG");
+		itemRecipe.setIngredient('R', Material.RED_DYE);
+		itemRecipe.setIngredient('I', Material.NETHERITE_INGOT);
+		itemRecipe.setIngredient('B', Material.BLUE_DYE);
+		itemRecipe.setIngredient('D', Material.DRAGON_BREATH);
+		itemRecipe.setIngredient('S', Material.NETHER_STAR);
+		itemRecipe.setIngredient('Y', Material.YELLOW_DYE);
+		itemRecipe.setIngredient('G', Material.GREEN_DYE);
 		
 		Bukkit.getServer().addRecipe(itemRecipe);
 	}

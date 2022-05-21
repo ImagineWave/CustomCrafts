@@ -37,7 +37,7 @@ public class RelocatorOpenGUIandCharge implements Listener {
 	if(!item.getItemMeta().hasLore()) return;
 	if(!item.getItemMeta().getLore().get(0).equals("Экспериментальное портативное устройство")) return;
 	if(!item.getItemMeta().getLore().get(1).equals("пространственного туннелирования")) return;
-	
+	openGUI(p);
 	}
 	private boolean isCharged(Player p) {
 		ItemStack item = p.getInventory().getItemInMainHand();
@@ -56,9 +56,21 @@ public class RelocatorOpenGUIandCharge implements Listener {
 		Inventory gui = Bukkit.createInventory(p, 9*3, guiName);
 		
 		ItemStack redItem = new ItemStack(Material.RED_CONCRETE);
+		if(redLoc == null) {
+			redItem.setType(Material.WHITE_CONCRETE);
+		}
 		ItemStack blueItem = new ItemStack(Material.BLUE_CONCRETE);
+		if(blueLoc == null) {
+			blueItem.setType(Material.WHITE_CONCRETE);
+		}
 		ItemStack yellowItem = new ItemStack(Material.YELLOW_CONCRETE);
+		if(yellowLoc == null) {
+			yellowItem.setType(Material.WHITE_CONCRETE);
+		}
 		ItemStack greenItem = new ItemStack(Material.LIME_CONCRETE);
+		if(greenLoc == null) {
+			greenItem.setType(Material.WHITE_CONCRETE);
+		}
 		
 		ItemStack redFlagItem = new ItemStack(Material.RED_BANNER);
 		ItemStack blueFlagItem = new ItemStack(Material.BLUE_BANNER);
@@ -95,17 +107,21 @@ public class RelocatorOpenGUIandCharge implements Listener {
 		yellowFlagItem.setItemMeta(yellowFlagMeta);
 		greenFlagItem.setItemMeta(greenFlagMeta);
 		
-		gui.setItem(1, redItem);
-		gui.setItem(2, blueItem);
-		gui.setItem(3, yellowItem);
-		gui.setItem(4, greenItem);
+		gui.setItem(10, redItem);
+		gui.setItem(12, blueItem);
+		gui.setItem(14, yellowItem);
+		gui.setItem(16, greenItem);
 		
 		gui.setItem(1, redFlagItem);
-		gui.setItem(2, blueFlagItem);
-		gui.setItem(3, yellowFlagItem);
-		gui.setItem(4, greenFlagItem);
+		gui.setItem(3, blueFlagItem);
+		gui.setItem(5, yellowFlagItem);
+		gui.setItem(7, greenFlagItem);
+		p.openInventory(gui);
 	}
 	private String locToDisplayName(Location loc) {
+		if(loc == null) {
+			return "Точка не задана";
+		}
 		String result = "";
 		switch (loc.getWorld().getName()) {
 		case("world"):{
@@ -130,15 +146,21 @@ public class RelocatorOpenGUIandCharge implements Listener {
 		result = result + loc.getBlockZ() + " ";
 		return result;
 	}
-	private Location getPortalExit(String name, String color) {
+	private Location getPortalExit(String name, String color) { //TODO ПРОБЛЕМА ТУТ
 		File file = new File(plugin.getDataFolder() + File.separator + "Relocator.yml");
 		FileConfiguration f = YamlConfiguration.loadConfiguration(file);
-		Location loc = new Location(Bukkit.getServer().getWorld(
-				f.getString("relocator." + name +"."+ color +".world")),
-				f.getDouble("relocator." + name +"."+ color +".x"),
-				f.getDouble("relocator." + name +"."+ color +".y"),
-				f.getDouble("relocator." + name +"."+ color +".z"));
-		return loc;
+		
+		try {
+			Location loc = new Location(Bukkit.getServer().getWorld(
+					f.getString("relocator." + name +"."+ color +".world")),
+					f.getDouble("relocator." + name +"."+ color +".x"),
+					f.getDouble("relocator." + name +"."+ color +".y"),
+					f.getDouble("relocator." + name +"."+ color +".z"));
+			return loc;
+		} catch(IllegalArgumentException e1) {
+			
+		}
+		return null;
 	}
 	private void locToConfig (String name, String color, Location loc) {
 		File file = new File(plugin.getDataFolder() + File.separator + "Relocator.yml");
