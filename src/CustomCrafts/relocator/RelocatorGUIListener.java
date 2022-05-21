@@ -22,9 +22,11 @@ import net.md_5.bungee.api.ChatColor;
 
 public class RelocatorGUIListener implements Listener {
 	private Main plugin;
+	private RelocatorOpenGUIandCharge openGUIClass;
 	private String guiName = "§3Открытие и настройка портала";
 	public RelocatorGUIListener(Main plugin) {
 		this.plugin = plugin;
+		this.openGUIClass = new RelocatorOpenGUIandCharge(plugin);
 	}
 	@EventHandler
 	public void guiClickEvent(InventoryClickEvent e) {
@@ -36,18 +38,26 @@ public class RelocatorGUIListener implements Listener {
 			}
 			if (e.getCurrentItem().getType().equals(Material.RED_BANNER)) {
 				locToConfig(p.getName(),"red",p.getLocation());
+				p.closeInventory();
+				openGUIClass.openGUI(p);
 			}
 			
 			if (e.getCurrentItem().getType().equals(Material.BLUE_BANNER)) {
 				locToConfig(p.getName(),"blue",p.getLocation());
+				p.closeInventory();
+				openGUIClass.openGUI(p);
 			}
 			
 			if (e.getCurrentItem().getType().equals(Material.YELLOW_BANNER)) {
 				locToConfig(p.getName(),"yellow",p.getLocation());
+				p.closeInventory();
+				openGUIClass.openGUI(p);
 			}
 			
 			if (e.getCurrentItem().getType().equals(Material.LIME_BANNER)) {
 				locToConfig(p.getName(),"green",p.getLocation());
+				p.closeInventory();
+				openGUIClass.openGUI(p);
 			}
 	
 			if (e.getCurrentItem().getType().equals(Material.RED_CONCRETE)) {

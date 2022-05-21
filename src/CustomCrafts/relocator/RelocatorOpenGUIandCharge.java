@@ -39,13 +39,27 @@ public class RelocatorOpenGUIandCharge implements Listener {
 	if(!item.getItemMeta().getLore().get(1).equals("пространственного туннелирования")) return;
 	openGUI(p);
 	}
+	@EventHandler
+	public void useLEFT(PlayerInteractEvent e) {
+		if (e.getAction() != Action.LEFT_CLICK_BLOCK) return;
+		if (e.getPlayer().getInventory().getItemInMainHand().getType() != Material.NETHER_STAR) return;
+		Player p = e.getPlayer();
+		ItemStack item = e.getPlayer().getInventory().getItemInMainHand();
+		if(!item.getItemMeta().hasDisplayName()) return;
+		if(!item.getItemMeta().hasLore()) return;
+		if(!item.getItemMeta().getLore().get(0).equals("Экспериментальное портативное устройство")) return;
+		if(!item.getItemMeta().getLore().get(1).equals("пространственного туннелирования")) return;
+		String color = item.getItemMeta().getLore().get(4);
+		Location exit = getPortalExit(p.getName(),color);
+		createPortal(e.getClickedBlock().getLocation(),exit);
+		}
 	private boolean isCharged(Player p) {
 		ItemStack item = p.getInventory().getItemInMainHand();
 		ItemMeta meta = item.getItemMeta();
 		Integer count = Integer.parseInt(meta.getLore().get(3));
 		return count>=5;
 	}
-	private void openGUI(Player p) {
+	public void openGUI(Player p) {
 		String guiName = "§3Открытие и настройка портала";
 		
 		Location redLoc = getPortalExit(p.getName(), "red");
