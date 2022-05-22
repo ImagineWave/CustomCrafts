@@ -395,13 +395,13 @@ private static Main instance;
 		NamespacedKey itemKey = new NamespacedKey(this, "relocator_key");
 		ShapedRecipe itemRecipe = new ShapedRecipe(itemKey, item);
 		itemRecipe.shape("RIB","DSD","YIG");
-		itemRecipe.setIngredient('R', Material.RED_DYE);
 		itemRecipe.setIngredient('I', Material.NETHERITE_INGOT);
-		itemRecipe.setIngredient('B', Material.BLUE_DYE);
 		itemRecipe.setIngredient('D', Material.DRAGON_BREATH);
 		itemRecipe.setIngredient('S', Material.NETHER_STAR);
-		itemRecipe.setIngredient('Y', Material.YELLOW_DYE);
-		itemRecipe.setIngredient('G', Material.GREEN_DYE);
+		itemRecipe.setIngredient('R', Material.MUSIC_DISC_CHIRP);
+		itemRecipe.setIngredient('B', Material.MUSIC_DISC_MALL);
+		itemRecipe.setIngredient('Y', Material.MUSIC_DISC_13);
+		itemRecipe.setIngredient('G', Material.MUSIC_DISC_CAT);
 		
 		Bukkit.getServer().addRecipe(itemRecipe);
 	}

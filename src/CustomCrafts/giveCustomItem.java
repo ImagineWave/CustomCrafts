@@ -131,8 +131,20 @@ public class giveCustomItem implements CommandExecutor{
 	        destroyerMeta.addEnchant(Enchantment.DURABILITY, 1 , true);
 	        destroyer.setItemMeta(destroyerMeta);
 	        
+	        ItemStack relocator = new ItemStack(Material.NETHER_STAR);
+			ItemMeta relocatormeta = relocator.getItemMeta();
+			relocatormeta.setDisplayName("§5§lЭ.П.У.П.Т.");
+			List<String> relocatorlore = new ArrayList<String>();
+			relocatorlore.add("Экспериментальное портативное устройство");
+			relocatorlore.add("пространственного туннелирования");
+			relocatorlore.add("§eОсталось зарядов");
+			relocatorlore.add("0");
+			relocatorlore.add("Точка не выбрана");
+			relocatormeta.setLore(relocatorlore);
+			relocator.setItemMeta(relocatormeta);
+			
 			Inventory gui = Bukkit.createInventory(p, 18, "MegaOpIMBAHolyShitItems");
-			ItemStack[] imbaItems = {ethernalFeather,soulFeather,compass,notchedPickaxe,reaper,Chronos,cheapPickaxe,strongAxe,destroyer};
+			ItemStack[] imbaItems = {ethernalFeather,soulFeather,compass,notchedPickaxe,reaper,Chronos,cheapPickaxe,strongAxe,destroyer,relocator};
 			gui.setContents(imbaItems);
 			p.openInventory(gui);
 			return true;
@@ -329,6 +341,34 @@ public class giveCustomItem implements CommandExecutor{
 		        meta.addEnchant(Enchantment.DURABILITY, 1 , true);
 		        item.setItemMeta(meta);
 				p.getInventory().addItem(item);
+			}
+			break;
+			case("relocator"):{
+				ItemStack relocator = new ItemStack(Material.NETHER_STAR);
+				ItemMeta relocatormeta = relocator.getItemMeta();
+				relocatormeta.setDisplayName("§5§lЭ.П.У.П.Т.");
+				List<String> relocatorlore = new ArrayList<String>();
+				relocatorlore.add("Экспериментальное портативное устройство");
+				relocatorlore.add("пространственного туннелирования");
+				relocatorlore.add("§eОсталось зарядов");
+				relocatorlore.add("0");
+				relocatorlore.add("Точка не выбрана");
+				relocatormeta.setLore(relocatorlore);
+				relocator.setItemMeta(relocatormeta);
+			}
+			break;
+			case("relocator*"):{
+				ItemStack relocator = new ItemStack(Material.NETHER_STAR);
+				ItemMeta relocatormeta = relocator.getItemMeta();
+				relocatormeta.setDisplayName("§5§lЭ.П.У.П.Т.");
+				List<String> relocatorlore = new ArrayList<String>();
+				relocatorlore.add("Экспериментальное портативное устройство");
+				relocatorlore.add("пространственного туннелирования");
+				relocatorlore.add("§eОсталось зарядов");
+				relocatorlore.add("9999999");
+				relocatorlore.add("Точка не выбрана");
+				relocatormeta.setLore(relocatorlore);
+				relocator.setItemMeta(relocatormeta);
 			}
 			break;
 			default:{

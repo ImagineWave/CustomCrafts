@@ -2,12 +2,18 @@ package CustomCrafts.relocator;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
+import org.bukkit.block.Container;
 import org.bukkit.block.EndGateway;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -27,6 +33,7 @@ public class RelocatorOpenGUIandCharge implements Listener {
 	public RelocatorOpenGUIandCharge (Main plugin) {
 		this.plugin = plugin;
 	}
+	private static Map<Player,Long> map = new HashMap<>();
 	@EventHandler
 	public void use(PlayerInteractEvent e) {
 	if (e.getAction() != Action.RIGHT_CLICK_AIR && e.getAction() !=Action.RIGHT_CLICK_BLOCK) return;
@@ -37,6 +44,14 @@ public class RelocatorOpenGUIandCharge implements Listener {
 	if(!item.getItemMeta().hasLore()) return;
 	if(!item.getItemMeta().getLore().get(0).equals("Экспериментальное портативное устройство")) return;
 	if(!item.getItemMeta().getLore().get(1).equals("пространственного туннелирования")) return;
+	if(p.getInventory().getItemInOffHand().getType() == Material.DRAGON_BREATH) {
+		if(recharged(p,item)) {
+			consumeDragonBreath(p);
+			return;
+		}
+		p.sendMessage("§cВ предмете уже максимально количество зарядов");
+		return;
+	}
 	openGUI(p);
 	}
 	@EventHandler
@@ -51,13 +66,60 @@ public class RelocatorOpenGUIandCharge implements Listener {
 		if(!item.getItemMeta().getLore().get(1).equals("пространственного туннелирования")) return;
 		String color = item.getItemMeta().getLore().get(4);
 		Location exit = getPortalExit(p.getName(),color);
-		createPortal(e.getClickedBlock().getLocation(),exit);
+		if(!isReady(p)) {
+			return;
 		}
-	private boolean isCharged(Player p) {
-		ItemStack item = p.getInventory().getItemInMainHand();
+		if(!e.getClickedBlock().getWorld().equals(exit.getWorld())) {
+			p.sendMessage("§cТочка входа и точка выхода должны быть в одном мире");
+			return;
+		}
+		if(checkCharges(p, item)) {
+			if(e.getClickedBlock().getType().equals(Material.END_GATEWAY)) {
+				return;
+			}
+			createPortal(e.getClickedBlock().getLocation(),exit);
+			consumeCharges(p, item);
+			return;
+		}
+		p.sendMessage("§cВ предмете недостаточно зарядов");
+		}
+	private boolean recharged(Player p, ItemStack item) {
 		ItemMeta meta = item.getItemMeta();
-		Integer count = Integer.parseInt(meta.getLore().get(3));
-		return count>=5;
+		List<String> lore = item.getItemMeta().getLore();
+		Integer charge = Integer.parseInt(lore.get(3));
+		charge = charge + 1;
+		if(charge>20) return false;
+		lore.set(3, charge.toString());
+		meta.setLore(lore);
+		item.setItemMeta(meta);
+		return true;
+	}
+	private void consumeDragonBreath(Player p) {
+		ItemStack bottle = new ItemStack (Material.GLASS_BOTTLE);
+		int amount = p.getInventory().getItemInOffHand().getAmount();
+		amount = amount - 1;
+		if (amount!=0) {
+			p.getInventory().getItemInOffHand().setAmount(amount);
+			p.getInventory().addItem(bottle);
+			return;
+		}
+		p.getInventory().setItemInOffHand(bottle);
+		return;
+	}
+	private void consumeCharges(Player p, ItemStack item) {
+		ItemMeta meta = item.getItemMeta();
+		List<String> lore = item.getItemMeta().getLore();
+		Integer charge = Integer.parseInt(lore.get(3));
+		charge = charge - 2;
+		lore.set(3, charge.toString());
+		meta.setLore(lore);
+		item.setItemMeta(meta);
+	}
+	private boolean checkCharges(Player p, ItemStack item) {
+		ItemMeta meta = item.getItemMeta();
+		List<String> lore = item.getItemMeta().getLore();
+		Integer charge = Integer.parseInt(lore.get(3));
+		return charge>=2;
 	}
 	public void openGUI(Player p) {
 		String guiName = "§3Открытие и настройка портала";
@@ -191,8 +253,34 @@ public class RelocatorOpenGUIandCharge implements Listener {
 	 }
 	private void createPortal(Location start, Location exit) {
 		Block portal = start.getBlock();
-		EndGateway gate = (EndGateway) portal.getState();
-		gate.setExitLocation(exit);
-		gate.setExactTeleport(false);
+		Material old = portal.getType();
+		BlockState oldState = portal.getState();
+		portal.setType(Material.END_GATEWAY);
+		BlockState state = portal.getState();
+		if(state instanceof EndGateway) {
+			EndGateway gate = (EndGateway) state;
+			gate.setExitLocation(exit);
+			gate.setExactTeleport(true);
+			state.update();
+		}
+		Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
+            @Override
+            public void run() {
+            	portal.setType(old);
+            	oldState.update();
+            }
+        }, 5*20L);
+	}
+	private Boolean isReady(Player p) {
+		Long cooldown = 1000*5l;
+		if(map.containsKey(p)) {
+			if(System.currentTimeMillis()>map.get(p)) {
+				map.put(p, System.currentTimeMillis()+cooldown);
+				return true;
+			}
+			return false;
+		}
+		map.put(p, System.currentTimeMillis()+cooldown);
+		return true;
 	}
 }
