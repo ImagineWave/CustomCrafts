@@ -355,6 +355,7 @@ public class giveCustomItem implements CommandExecutor{
 				relocatorlore.add("Точка не выбрана");
 				relocatormeta.setLore(relocatorlore);
 				relocator.setItemMeta(relocatormeta);
+				p.getInventory().addItem(relocator);
 			}
 			break;
 			case("relocator*"):{
@@ -369,6 +370,7 @@ public class giveCustomItem implements CommandExecutor{
 				relocatorlore.add("Точка не выбрана");
 				relocatormeta.setLore(relocatorlore);
 				relocator.setItemMeta(relocatormeta);
+				p.getInventory().addItem(relocator);
 			}
 			break;
 			default:{
