@@ -69,6 +69,10 @@ public class Chronos implements Listener{
 		Bukkit.broadcastMessage("§a" + p.getName()+" §6Использовал силу Хроноса");
 		p.sendMessage("§c§lВы чувствуете себя уставшим...");
 		p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 20 * 180, 0), true);
+		p.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 20 * 10, 0), true);
+		p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20 * 10, 0), true);
+		p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 20 * 10, 0), true);
+		p.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 20 * 10, 0), true);
 		World world = p.getLocation().getWorld();
 		Long time = world.getTime()+12000;
 		world.setTime(time);

@@ -74,7 +74,7 @@ private static Main instance;
 		List<String> lore = new ArrayList<String>();
 		lore.add("Смена дня и ночи");
 		metaChronos.setLore(lore);
-		metaChronos.addEnchant(Enchantment.VANISHING_CURSE, 1 , true);
+		metaChronos.addEnchant(Enchantment.ARROW_INFINITE, 1 , true);
 		Chronos.setItemMeta(metaChronos);
 		NamespacedKey Chronoskey = new NamespacedKey(this, "Chronos_key");
 		

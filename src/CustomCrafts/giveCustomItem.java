@@ -96,7 +96,7 @@ public class giveCustomItem implements CommandExecutor{
 			List<String> chronosLore = new ArrayList<String>();
 			chronosLore.add("Смена дня и ночи");
 			metaChronos.setLore(chronosLore);
-			metaChronos.addEnchant(Enchantment.VANISHING_CURSE, 1 , true);
+			metaChronos.addEnchant(Enchantment.ARROW_INFINITE, 1 , true);
 			Chronos.setItemMeta(metaChronos);
 			
 			ItemStack cheapPickaxe = new ItemStack(Material.GOLDEN_PICKAXE);
@@ -270,7 +270,7 @@ public class giveCustomItem implements CommandExecutor{
 				List<String> lore = new ArrayList<String>();
 				lore.add("Смена дня и ночи");
 				metaChronos.setLore(lore);
-				metaChronos.addEnchant(Enchantment.VANISHING_CURSE, 1 , true);
+				metaChronos.addEnchant(Enchantment.ARROW_INFINITE, 1 , true);
 				Chronos.setItemMeta(metaChronos);
 				p.getInventory().addItem(Chronos);
 			}

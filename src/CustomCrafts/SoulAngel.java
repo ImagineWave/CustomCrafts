@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.libs.jline.internal.Log;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -14,6 +16,8 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 public class SoulAngel implements Listener{
 	private Main plugin;
@@ -26,6 +30,16 @@ public class SoulAngel implements Listener{
 		Player p = e.getPlayer();
 		if(!p.getGameMode().equals(org.bukkit.GameMode.SURVIVAL)) return;
 		if(allowFly(p)) {
+			Location loc = p.getLocation();
+			if(loc.getWorld().getName().equalsIgnoreCase("world_the_end")) {
+				int ModX = Math.abs(loc.getBlockX());
+				int ModZ = Math.abs(loc.getBlockZ());
+				if((ModX>=300)||(ModZ>=300)) {
+					p.setAllowFlight(false);
+					p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 20 * 10, 0), true);
+					return;
+				}
+			}
 			p.setAllowFlight(true);
 			return;
 		}
