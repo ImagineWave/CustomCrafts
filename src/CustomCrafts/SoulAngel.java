@@ -3,10 +3,9 @@ package CustomCrafts;
 import java.util.HashMap;
 import java.util.List;
 
-import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.libs.jline.internal.Log;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -28,7 +27,7 @@ public class SoulAngel implements Listener{
 	@EventHandler
 	public void onMove(PlayerMoveEvent e) {
 		Player p = e.getPlayer();
-		if(!p.getGameMode().equals(org.bukkit.GameMode.SURVIVAL)) return;
+		if(!p.getGameMode().equals(GameMode.SURVIVAL)) return;
 		if(allowFly(p)) {
 			Location loc = p.getLocation();
 			if(loc.getWorld().getName().equalsIgnoreCase("world_the_end")) {

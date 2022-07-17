@@ -35,37 +35,23 @@ public class NotchedPickaxe implements Listener{
 		toggleMode(item);
 		return;
 	}
-	public boolean checkOwner(Player p, ItemStack item) {
-		ItemMeta meta = item.getItemMeta();
-		List<String> lore = item.getItemMeta().getLore();
-		if(meta.getLore().get(2).equals("")) {
-			lore.set(2, p.getName());
-			meta.setLore(lore);
-			item.setItemMeta(meta);
-			return true;
-		}
-		if(meta.getLore().get(2).equals(p.getName())) {
-			return true;
-		}
-		return false;
-	}
 	public void toggleMode(ItemStack item) {
 		ItemMeta meta = item.getItemMeta();
 		List<String> lore = item.getItemMeta().getLore();
-		if(meta.getLore().get(4).equals("Щёлк")) {
+		if(meta.getLore().get(2).equals("Щёлк")) {
 			meta.removeEnchant(Enchantment.SILK_TOUCH);
 			meta.addEnchant(Enchantment.LOOT_BONUS_BLOCKS, 5, true);
 			meta.setDisplayName("§4§lЗ§e§lа§a§lз§b§lу§9§lб§d§lр§9§le§b§lн§a§lн§e§lа§4§lя §6§lКирка");
-			lore.set(4, "Удача");
+			lore.set(2, "Удача");
 			meta.setLore(lore);
 			item.setItemMeta(meta);
 			return;
 		}
-		if(meta.getLore().get(4).equals("Удача")) {
+		if(meta.getLore().get(2).equals("Удача")) {
 			meta.removeEnchant(Enchantment.LOOT_BONUS_BLOCKS);
 			meta.addEnchant(Enchantment.SILK_TOUCH, 1, true);
 			meta.setDisplayName("§4§lЗ§e§lа§a§lз§b§lу§9§lб§d§lр§9§le§b§lн§a§lн§e§lа§4§lя §5§lКирка");
-			lore.set(4, "Щёлк");
+			lore.set(2, "Щёлк");
 			meta.setLore(lore);
 			item.setItemMeta(meta);
 			return;

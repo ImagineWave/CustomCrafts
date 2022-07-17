@@ -128,8 +128,11 @@ public class RelocatorOpenGUIandCharge implements Listener {
 		Location blueLoc = getPortalExit(p.getName(), "blue");
 		Location yellowLoc = getPortalExit(p.getName(), "yellow");
 		Location greenLoc = getPortalExit(p.getName(), "green");
-		
-		Inventory gui = Bukkit.createInventory(p, 9*3, guiName);
+		//-------
+		Location cyanLoc = getPortalExit(p.getName(), "cyan");
+		Location orangeLoc = getPortalExit(p.getName(), "orange");
+		//-------
+		Inventory gui = Bukkit.createInventory(p, 9*4, guiName);
 		
 		ItemStack redItem = new ItemStack(Material.RED_CONCRETE);
 		if(redLoc == null) {
@@ -147,41 +150,82 @@ public class RelocatorOpenGUIandCharge implements Listener {
 		if(greenLoc == null) {
 			greenItem.setType(Material.WHITE_CONCRETE);
 		}
+		//-----
+		ItemStack cyanItem = new ItemStack(Material.CYAN_CONCRETE);
+		if(cyanLoc == null) {
+			cyanItem.setType(Material.WHITE_CONCRETE);
+		}
+		ItemStack orangeItem = new ItemStack(Material.ORANGE_CONCRETE);
+		if(orangeLoc == null) {
+			orangeItem.setType(Material.WHITE_CONCRETE);
+		}
+		//-------
+		
 		
 		ItemStack redFlagItem = new ItemStack(Material.RED_BANNER);
 		ItemStack blueFlagItem = new ItemStack(Material.BLUE_BANNER);
 		ItemStack yellowFlagItem = new ItemStack(Material.YELLOW_BANNER);
 		ItemStack greenFlagItem = new ItemStack(Material.LIME_BANNER);
+		//-------
+		ItemStack cyanFlagItem = new ItemStack(Material.CYAN_BANNER);
+		ItemStack orangeFlagItem = new ItemStack(Material.ORANGE_BANNER);
+		//-------
 		
+
 		ItemMeta redMeta = redItem.getItemMeta();
 		ItemMeta blueMeta = blueItem.getItemMeta();
 		ItemMeta yellowMeta = yellowItem.getItemMeta();
 		ItemMeta greenMeta = greenItem.getItemMeta();
+		//-------
+		ItemMeta cyanMeta = cyanItem.getItemMeta();
+		ItemMeta orangeMeta = orangeItem.getItemMeta();
+		//-------
+		
 		
 		ItemMeta redFlagMeta = redFlagItem.getItemMeta();
 		ItemMeta blueFlagMeta = blueFlagItem.getItemMeta();
 		ItemMeta yellowFlagMeta = yellowFlagItem.getItemMeta();
 		ItemMeta greenFlagMeta = greenFlagItem.getItemMeta();
+		//-------
+		ItemMeta cyanFlagMeta = cyanFlagItem.getItemMeta();
+		ItemMeta orangeFlagMeta = orangeFlagItem.getItemMeta();
+		//-------
 		
 		redMeta.setDisplayName(locToDisplayName(redLoc));
 		blueMeta.setDisplayName(locToDisplayName(blueLoc));
 		yellowMeta.setDisplayName(locToDisplayName(yellowLoc));
 		greenMeta.setDisplayName(locToDisplayName(greenLoc));
+		//-------
+		cyanMeta.setDisplayName(locToDisplayName(cyanLoc));
+		orangeMeta.setDisplayName(locToDisplayName(orangeLoc));
+		//-------
 		
-		redFlagMeta.setDisplayName("Установить "+ ChatColor.RED +"КРУСНУЮ "+ChatColor.RESET+"точку");
+		redFlagMeta.setDisplayName("Установить "+ ChatColor.RED +"КРАСНУЮ "+ChatColor.RESET+"точку");
 		blueFlagMeta.setDisplayName("Установить "+ ChatColor.BLUE +"СИНЮЮ "+ChatColor.RESET+"точку");
 		yellowFlagMeta.setDisplayName("Установить "+ ChatColor.YELLOW +"ЖЁЛТУЮ "+ChatColor.RESET+"точку");
 		greenFlagMeta.setDisplayName("Установить "+ ChatColor.GREEN +"ЗЕЛЁНУЮ "+ChatColor.RESET+"точку");
+		//-------
+		cyanFlagMeta.setDisplayName("Установить "+ ChatColor.YELLOW +"БИРЮЗОВУЮ "+ChatColor.RESET+"точку");
+		orangeFlagMeta.setDisplayName("Установить "+ ChatColor.GREEN +"ОРАНЖЕНУЮ "+ChatColor.RESET+"точку");
+		//-------
 		
 		redItem.setItemMeta(redMeta);
 		blueItem.setItemMeta(blueMeta);
 		yellowItem.setItemMeta(yellowMeta);
 		greenItem.setItemMeta(greenMeta);
+		//-------
+		cyanItem.setItemMeta(cyanMeta);
+		orangeItem.setItemMeta(orangeMeta);
+		//-------
 		
 		redFlagItem.setItemMeta(redFlagMeta);
 		blueFlagItem.setItemMeta(blueFlagMeta);
 		yellowFlagItem.setItemMeta(yellowFlagMeta);
 		greenFlagItem.setItemMeta(greenFlagMeta);
+		//-------
+		cyanFlagItem.setItemMeta(cyanFlagMeta);
+		orangeFlagItem.setItemMeta(orangeFlagMeta);
+		//-------
 		
 		gui.setItem(10, redItem);
 		gui.setItem(12, blueItem);
@@ -238,19 +282,6 @@ public class RelocatorOpenGUIandCharge implements Listener {
 		}
 		return null;
 	}
-	private void locToConfig (String name, String color, Location loc) {
-		File file = new File(plugin.getDataFolder() + File.separator + "Relocator.yml");
-		FileConfiguration f = YamlConfiguration.loadConfiguration(file);
-		f.set("relocator." + name + "."+ color +".world", loc.getWorld().getName());
-		f.set("relocator." + name + "."+ color +".x", loc.getBlockX());
-		f.set("relocator." + name + "."+ color +".y", loc.getBlockY());
-		f.set("relocator." + name + "."+ color +".z", loc.getBlockZ());
-				try {
-			f.save(file);
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-	 }
 	private void createPortal(Location start, Location exit) {
 		Block portal = start.getBlock();
 		Material old = portal.getType();
