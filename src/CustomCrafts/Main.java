@@ -15,11 +15,15 @@ import org.bukkit.scheduler.BukkitTask;
 
 import CustomCrafts.ItemStack.CheapPickaxeItem;
 import CustomCrafts.ItemStack.ChronosItem;
+import CustomCrafts.ItemStack.CompassItem;
 import CustomCrafts.ItemStack.DestroyerItem;
 import CustomCrafts.ItemStack.EthernalFeatherItem;
 import CustomCrafts.ItemStack.NotchedPickaxeItem;
 import CustomCrafts.ItemStack.ReaperItem;
+import CustomCrafts.ItemStack.RelocatorItem;
+import CustomCrafts.ItemStack.SoulFeatherItem;
 import CustomCrafts.ItemStack.StrongAxeItem;
+import CustomCrafts.ItemStack.TotemItem;
 
 public class Main extends JavaPlugin {
 
@@ -120,16 +124,9 @@ private static Main instance;
 		Bukkit.getServer().addRecipe(reaperRecipe);
 	}	
 	public void craftTotem() {
-		ItemStack totem = new ItemStack(Material.TOTEM_OF_UNDYING);
-		ItemMeta meta = totem.getItemMeta();
-		meta.setDisplayName("§a§lБессмертие");
-		List<String> lore = new ArrayList<String>();
-		meta.addEnchant(Enchantment.DURABILITY, 1 , true);
-		lore.add("§6Сохраняет инвентарь и опыт при смерти");
-		meta.setLore(lore);
-		totem.setItemMeta(meta);
+		ItemStack item = TotemItem.getItem();
 		NamespacedKey totemKey = new NamespacedKey(this, "totem_key");
-		ShapedRecipe totemRecipe = new ShapedRecipe(totemKey, totem);
+		ShapedRecipe totemRecipe = new ShapedRecipe(totemKey, item);
 		totemRecipe.shape(" A ","ABA"," A ");
 		totemRecipe.setIngredient('A', Material.TOTEM_OF_UNDYING);
 		totemRecipe.setIngredient('B', Material.DIAMOND_BLOCK);
@@ -155,18 +152,7 @@ private static Main instance;
 		Bukkit.getServer().addRecipe(contractRecipe);
 	}
 	public void craftCompass() {
-		ItemStack item = new ItemStack(Material.COMPASS);
-		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName("§6Компас возвращения");
-		List<String> lore = new ArrayList<String>();
-		meta.addEnchant(Enchantment.DURABILITY, 1 , true);
-		lore.add("§aВозвращает владельца домой");
-		lore.add("§eВладелец");
-		lore.add("");
-		lore.add("§eОсталось использований");
-		lore.add("5");
-		meta.setLore(lore);
-		item.setItemMeta(meta);
+		ItemStack item = CompassItem.getItem();
 		NamespacedKey itemKey = new NamespacedKey(this, "compass_key");
 		ShapedRecipe itemRecipe = new ShapedRecipe(itemKey, item);
 		itemRecipe.shape(" D ","CBC"," D ");
@@ -186,18 +172,7 @@ private static Main instance;
 		Bukkit.getServer().addRecipe(itemRecipe);
 	}
 	public void craftSoulFeather() {
-		ItemStack item = new ItemStack(Material.FEATHER);
-		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName("§6Перо Души");
-		List<String> lore = new ArrayList<String>();
-		meta.addEnchant(Enchantment.DURABILITY, 1 , true);
-		lore.add("§4Постоянный полет");
-		lore.add("§eВладелец");
-		lore.add("");
-		lore.add("§aПосле смерти");
-		lore.add("§aвернется к владельцу");
-		meta.setLore(lore);
-		item.setItemMeta(meta);
+		ItemStack item = SoulFeatherItem.getItem();
 		NamespacedKey itemKey = new NamespacedKey(this, "soulFeather_key");
 		ShapedRecipe itemRecipe = new ShapedRecipe(itemKey, item);
 		itemRecipe.shape(" A ","ABA"," A ");
@@ -266,18 +241,7 @@ private static Main instance;
 		Bukkit.getServer().addRecipe(itemRecipe);
 	}
 	public void craftRelocator() {
-		ItemStack item = new ItemStack(Material.NETHER_STAR);
-		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName("§5§lЭ.П.У.П.Т.");
-		List<String> lore = new ArrayList<String>();
-		lore.add("Экспериментальное портативное устройство");
-		lore.add("пространственного туннелирования");
-		lore.add("§eОсталось зарядов");
-		lore.add("0");
-		lore.add("Точка не выбрана");
-		meta.setLore(lore);
-		item.setItemMeta(meta);
-		
+		ItemStack item = RelocatorItem.getItem();
 		NamespacedKey itemKey = new NamespacedKey(this, "relocator_key");
 		ShapedRecipe itemRecipe = new ShapedRecipe(itemKey, item);
 		itemRecipe.shape("RIB","DSD","YIG");
