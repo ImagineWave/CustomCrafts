@@ -31,19 +31,24 @@ public class Chronos implements Listener{
 	
 	@EventHandler
 	public void use(PlayerInteractEvent e) {
-	if (e.getAction() != Action.RIGHT_CLICK_AIR && e.getAction() !=Action.RIGHT_CLICK_BLOCK) return;
-	if (e.getPlayer().getInventory().getItemInMainHand().getType() != Material.CLOCK) return;
-	Player p = e.getPlayer();
-	ItemStack item = e.getPlayer().getInventory().getItemInMainHand();
-	if(!item.getItemMeta().hasDisplayName()) return;
-	if(!item.getItemMeta().hasLore()) return;
-	if(!item.getItemMeta().getDisplayName().equals("§6§lЧасы Хроноса")) return;
-	if(!item.getItemMeta().getLore().get(0).equals("Смена дня и ночи")) return;
-	if(p.hasPotionEffect(PotionEffectType.WEAKNESS)) {
-		p.sendMessage("§cВам не хватет сил!");
+		if (e.getAction() != Action.RIGHT_CLICK_AIR && e.getAction() !=Action.RIGHT_CLICK_BLOCK) return;
+		if (e.getPlayer().getInventory().getItemInMainHand().getType() != Material.CLOCK) return;
+		Player p = e.getPlayer();
+		ItemStack item = e.getPlayer().getInventory().getItemInMainHand();
+		if(!item.getItemMeta().hasDisplayName()) return;
+		if(!item.getItemMeta().hasLore()) return;
+		if(!item.getItemMeta().getDisplayName().equals("§6§lЧасы Хроноса")) return;
+		if(!item.getItemMeta().getLore().get(0).equals("Смена дня и ночи")) return;
+		if (p.hasPotionEffect(PotionEffectType.WEAKNESS)) {
+			p.sendMessage("§cВам не хватет сил!");
+			return;
+		}
+		if (item.getItemMeta().getLore().get(1).equalsIgnoreCase("§2§lБез побочек!")) {
+			chronosFree(p);
+			return;
+		}
+		chronos(p);
 		return;
-	}
-	chronos(p);
 	}
 	public void removeItem(Player p) {
 		ItemStack hand = p.getInventory().getItemInMainHand();
@@ -65,7 +70,7 @@ public class Chronos implements Listener{
 			Bukkit.broadcastMessage("§a" + p.getName()+" §6Попытался использовать силу Хроноса, но получил §aкешбек");
 		}
 	}
-	public void chronos(Player p) {
+	private void chronos(Player p) {
 		Bukkit.broadcastMessage("§a" + p.getName()+" §6Использовал силу Хроноса");
 		p.sendMessage("§c§lВы чувствуете себя уставшим...");
 		p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 20 * 180, 0), true);
@@ -73,6 +78,14 @@ public class Chronos implements Listener{
 		p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20 * 10, 0), true);
 		p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 20 * 10, 0), true);
 		p.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 20 * 10, 0), true);
+		World world = p.getLocation().getWorld();
+		Long time = world.getTime()+12000;
+		world.setTime(time);
+	}
+	private void chronosFree(Player p) {
+		Bukkit.broadcastMessage("§a" + p.getName()+" §6Использовал силу Хроноса");
+		p.sendMessage("§c§lВы чувствуете себя уставшим...");
+		p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 20 * 3, 0), true);
 		World world = p.getLocation().getWorld();
 		Long time = world.getTime()+12000;
 		world.setTime(time);

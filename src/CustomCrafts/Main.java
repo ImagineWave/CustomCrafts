@@ -257,12 +257,11 @@ private static Main instance;
 	}
 	public void craftBedrock() {
 		ItemStack item = new ItemStack(Material.BEDROCK);
-		NamespacedKey itemKey = new NamespacedKey(this, "trident_key");
+		NamespacedKey itemKey = new NamespacedKey(this, "bedrock_key");
 		ShapedRecipe itemRecipe = new ShapedRecipe(itemKey, item);
-		itemRecipe.shape("AA ","AB ","  C");
-		itemRecipe.setIngredient('A', Material.PRISMARINE_SHARD);
+		itemRecipe.shape(" A ","ABA"," A ");
+		itemRecipe.setIngredient('A', Material.REINFORCED_DEEPSLATE);
 		itemRecipe.setIngredient('B', Material.HEART_OF_THE_SEA);
-		itemRecipe.setIngredient('C', Material.NETHER_STAR);
 		Bukkit.getServer().addRecipe(itemRecipe);
 	}
 }
