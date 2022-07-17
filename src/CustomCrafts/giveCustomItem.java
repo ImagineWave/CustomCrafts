@@ -1,6 +1,5 @@
 package CustomCrafts;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -24,6 +23,7 @@ import CustomCrafts.ItemStack.ReaperItem;
 import CustomCrafts.ItemStack.RelocatorItem;
 import CustomCrafts.ItemStack.SoulFeatherItem;
 import CustomCrafts.ItemStack.StrongAxeItem;
+import CustomCrafts.ItemStack.TotemItem;
 
 public class giveCustomItem implements CommandExecutor{
 	private Main plugin;
@@ -59,9 +59,11 @@ public class giveCustomItem implements CommandExecutor{
 	        ItemStack destroyer = DestroyerItem.getItem();
 	        
 	        ItemStack relocator = RelocatorItem.getItem();
+	        
+	        ItemStack totem = TotemItem.getItem();
 			
 			Inventory gui = Bukkit.createInventory(p, 18, "MegaOpIMBAHolyShitItems");
-			ItemStack[] imbaItems = {ethernalFeather,soulFeather,compass,notchedPickaxe,reaper,chronos,cheapPickaxe,strongAxe,destroyer,relocator};
+			ItemStack[] imbaItems = {ethernalFeather,soulFeather,compass,notchedPickaxe,reaper,chronos,totem,cheapPickaxe,strongAxe,destroyer,relocator};
 			gui.setContents(imbaItems);
 			p.openInventory(gui);
 			return true;
@@ -131,98 +133,50 @@ public class giveCustomItem implements CommandExecutor{
 			}
 			break;
 			case("cheapPickaxe"):{
-				ItemStack item = new ItemStack(Material.GOLDEN_PICKAXE);
-				ItemMeta meta = item.getItemMeta();
-				meta.setDisplayName("§5§lВоля §5ш§5§lахтера");
-				List<String> lore = new ArrayList<String>();
-				lore.add("Время наше все");
-				meta.setLore(lore);
-				meta.addEnchant(Enchantment.DIG_SPEED, 8 , true);
-				meta.setUnbreakable(true);
-				item.setItemMeta(meta);
-				p.getInventory().addItem(item);
+				ItemStack cheapPickaxe = CheapPickaxeItem.getItem();
+				p.getInventory().addItem(cheapPickaxe);
 			}
 			break;
 			case("cheapPickaxe*"):{
-				ItemStack item = new ItemStack(Material.GOLDEN_PICKAXE);
-				ItemMeta meta = item.getItemMeta();
-				meta.setDisplayName("§5§lВоля §5ш§5§lахтера");
-				List<String> lore = new ArrayList<String>();
-				lore.add("Время наше все");
-				meta.setLore(lore);
+				ItemStack cheapPickaxe = CheapPickaxeItem.getItem();
+				ItemMeta meta = cheapPickaxe.getItemMeta();
 				meta.addEnchant(Enchantment.DIG_SPEED, 127 , true);
-				meta.setUnbreakable(true);
-				item.setItemMeta(meta);
-				p.getInventory().addItem(item);
+				cheapPickaxe.setItemMeta(meta);
+				p.getInventory().addItem(cheapPickaxe);
 			}
 			break;
 			case("strongAxe"):{
-				ItemStack item = new ItemStack(Material.NETHERITE_AXE);
-		        ItemMeta meta = item.getItemMeta();
-		        meta.setDisplayName("§c§lСлепая Ярость");
-		        List<String> lore = new ArrayList<String>();
-		        lore.add("Убить их всех!");
-		        meta.setLore(lore);
-		        meta.addEnchant(Enchantment.DAMAGE_ALL, 10 , true);
-		        meta.addEnchant(Enchantment.DIG_SPEED, 5 , true);
-		        meta.setUnbreakable(true);
-		        item.setItemMeta(meta);
-				p.getInventory().addItem(item);
+				ItemStack strongAxe = StrongAxeItem.getItem();
+				p.getInventory().addItem(strongAxe);
 			}
 			break;
 			case("destroyer"):{
-				ItemStack item = new ItemStack(Material.GOLDEN_SHOVEL);
-		        ItemMeta meta = item.getItemMeta();
-		        meta.setDisplayName("§5Разрушитель");
-		        List<String> lore = new ArrayList<String>();
-		        lore.add("Уничтожет любой блок");
-		        lore.add("§eОсталось зарядов");
-		        lore.add("0");
-		        meta.setLore(lore);
-		        meta.addEnchant(Enchantment.DURABILITY, 1 , true);
-		        item.setItemMeta(meta);
-				p.getInventory().addItem(item);
+				ItemStack destroyer = DestroyerItem.getItem();
+				p.getInventory().addItem(destroyer);
 			}
 			break;
 			case("destroyer*"):{
-				ItemStack item = new ItemStack(Material.GOLDEN_SHOVEL);
+				ItemStack item = DestroyerItem.getItem();
 		        ItemMeta meta = item.getItemMeta();
 		        meta.setDisplayName("§5Разрушитель");
-		        List<String> lore = new ArrayList<String>();
-		        lore.add("Уничтожет любой блок");
-		        lore.add("§eОсталось зарядов");
-		        lore.add("999999");
+		        List<String> lore = meta.getLore();
+		        lore.set(2, "999999");
 		        meta.setLore(lore);
-		        meta.addEnchant(Enchantment.DURABILITY, 1 , true);
 		        item.setItemMeta(meta);
 				p.getInventory().addItem(item);
 			}
 			break;
 			case("relocator"):{
-				ItemStack relocator = new ItemStack(Material.NETHER_STAR);
-				ItemMeta relocatormeta = relocator.getItemMeta();
-				relocatormeta.setDisplayName("§5§lЭ.П.У.П.Т.");
-				List<String> relocatorlore = new ArrayList<String>();
-				relocatorlore.add("Экспериментальное портативное устройство");
-				relocatorlore.add("пространственного туннелирования");
-				relocatorlore.add("§eОсталось зарядов");
-				relocatorlore.add("0");
-				relocatorlore.add("Точка не выбрана");
-				relocatormeta.setLore(relocatorlore);
-				relocator.setItemMeta(relocatormeta);
+				ItemStack relocator = RelocatorItem.getItem();
 				p.getInventory().addItem(relocator);
 			}
 			break;
 			case("relocator*"):{
-				ItemStack relocator = new ItemStack(Material.NETHER_STAR);
+				ItemStack relocator = RelocatorItem.getItem();
 				ItemMeta relocatormeta = relocator.getItemMeta();
 				relocatormeta.setDisplayName("§5§lЭ.П.У.П.Т.");
-				List<String> relocatorlore = new ArrayList<String>();
-				relocatorlore.add("Экспериментальное портативное устройство");
-				relocatorlore.add("пространственного туннелирования");
-				relocatorlore.add("§eОсталось зарядов");
-				relocatorlore.add("9999999");
-				relocatorlore.add("Точка не выбрана");
+				List<String> relocatorlore = relocatormeta.getLore();
+				relocatorlore.set(3,"9999999"); //3
 				relocatormeta.setLore(relocatorlore);
 				relocator.setItemMeta(relocatormeta);
 				p.getInventory().addItem(relocator);

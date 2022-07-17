@@ -51,7 +51,7 @@ private static Main instance;
 		//BukkitTask globalCheck = new StrongAxe(this).runTaskTimer(this, 0, 30L);
 		
 		getCommand("givecustomitem").setExecutor(new giveCustomItem(this));
-		//craftClock();
+		craftClock();
 		craftAngel();
 		craftEnchantedGoldenApple();
 		craftPhantomMembrane();
@@ -78,10 +78,12 @@ private static Main instance;
 		ItemStack item = ChronosItem.getItem();
 		NamespacedKey Chronoskey = new NamespacedKey(this, "Chronos_key");
 		ShapedRecipe Chronosrecipe = new ShapedRecipe(Chronoskey, item);
-		Chronosrecipe.shape("ABA", "BCB", "ABA");
+		Chronosrecipe.shape("ASA", "BCB", "ANA");
 		Chronosrecipe.setIngredient('C', Material.CLOCK);
-		Chronosrecipe.setIngredient('A', Material.GOLD_BLOCK);
-		Chronosrecipe.setIngredient('B', Material.DIAMOND_BLOCK);
+		Chronosrecipe.setIngredient('A', Material.BLACK_CANDLE);
+		Chronosrecipe.setIngredient('B', Material.REINFORCED_DEEPSLATE);
+		Chronosrecipe.setIngredient('S', Material.SUNFLOWER);
+		Chronosrecipe.setIngredient('N', Material.WITHER_ROSE);
 		Bukkit.getServer().addRecipe(Chronosrecipe);
 	}
 	

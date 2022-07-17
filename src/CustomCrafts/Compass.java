@@ -58,8 +58,10 @@ public boolean compassCheck(Player p, ItemStack item) {
 	ItemMeta meta = item.getItemMeta();
 	List<String> lore = item.getItemMeta().getLore();
 	if(item.getItemMeta().getLore().get(2).equals("")) {
+		Integer charge = Integer.parseInt(lore.get(4));
+		charge = charge - 1;
 		lore.set(2, p.getName());
-		lore.set(4,"4");
+		lore.set(4, charge.toString());
 		meta.setLore(lore);
 		item.setItemMeta(meta);
 		return true;
