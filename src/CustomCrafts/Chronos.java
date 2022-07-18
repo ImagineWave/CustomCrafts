@@ -43,9 +43,11 @@ public class Chronos implements Listener{
 			p.sendMessage("§cВам не хватет сил!");
 			return;
 		}
-		if (item.getItemMeta().getLore().get(1).equalsIgnoreCase("§2§lБез побочек!")) {
-			chronosFree(p);
-			return;
+		if(item.getItemMeta().getLore().size()>1) {
+			if (item.getItemMeta().getLore().get(1).equalsIgnoreCase("§2§lБез побочек!")) {
+				chronosFree(p);
+				return;
+			}
 		}
 		chronos(p);
 		return;

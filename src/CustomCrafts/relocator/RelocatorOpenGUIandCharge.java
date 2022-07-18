@@ -231,11 +231,22 @@ public class RelocatorOpenGUIandCharge implements Listener {
 		gui.setItem(12, blueItem);
 		gui.setItem(14, yellowItem);
 		gui.setItem(16, greenItem);
+		//-------
 		
 		gui.setItem(1, redFlagItem);
 		gui.setItem(3, blueFlagItem);
 		gui.setItem(5, yellowFlagItem);
 		gui.setItem(7, greenFlagItem);
+		//-------
+		ItemStack cyanUpgrade = new ItemStack(Material.MUSIC_DISC_5);
+		ItemStack orangeUpgrade = new ItemStack(Material.MUSIC_DISC_PIGSTEP);
+		
+		if(cyanItem.getType().equals(Material.WHITE_CONCRETE)) {
+			
+		}
+		if(orangeItem.getType().equals(Material.WHITE_CONCRETE)) {
+			
+		}
 		p.openInventory(gui);
 	}
 	private String locToDisplayName(Location loc) {

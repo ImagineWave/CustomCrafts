@@ -92,7 +92,11 @@ public class giveCustomItem implements CommandExecutor{
 			break;
 			case("compass*"):{
 				ItemStack compass = CompassItem.getItem();
-				compass.getItemMeta().getLore().set(4, "99999");
+				ItemMeta meta = compass.getItemMeta();
+				List<String> lore = meta.getLore();
+				lore.set(4, "99999");
+				meta.setLore(lore);
+				compass.setItemMeta(meta);
 				p.getInventory().addItem(compass);
 			}
 			break;
