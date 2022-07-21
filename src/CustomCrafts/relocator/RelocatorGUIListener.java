@@ -63,6 +63,7 @@ public class RelocatorGUIListener implements Listener {
 			if (e.getCurrentItem().getType().equals(Material.CYAN_BANNER)) {
 				if(getPortalExit(p.getName(), "cyan")== null) {
 					e.setCancelled(true);
+					return;
 				}
 				locToConfig(p.getName(),"cyan",p.getLocation());
 				p.closeInventory();
@@ -71,6 +72,7 @@ public class RelocatorGUIListener implements Listener {
 			if (e.getCurrentItem().getType().equals(Material.ORANGE_BANNER)) {
 				if(getPortalExit(p.getName(), "orange")== null) {
 					e.setCancelled(true);
+					return;
 				}
 				locToConfig(p.getName(),"orange",p.getLocation());
 				p.closeInventory();
