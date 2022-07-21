@@ -89,7 +89,7 @@ public class RelocatorOpenGUIandCharge implements Listener {
 		List<String> lore = item.getItemMeta().getLore();
 		Integer charge = Integer.parseInt(lore.get(3));
 		charge = charge + 1;
-		if(charge>20) return false;
+		if(charge>60) return false; //МАКС зарядов
 		lore.set(3, charge.toString());
 		meta.setLore(lore);
 		item.setItemMeta(meta);
@@ -111,10 +111,22 @@ public class RelocatorOpenGUIandCharge implements Listener {
 		ItemMeta meta = item.getItemMeta();
 		List<String> lore = item.getItemMeta().getLore();
 		Integer charge = Integer.parseInt(lore.get(3));
-		charge = charge - 2;
+		int cost = amountPerPortal(p);
+		charge = charge - cost; //Потребление зарядов
 		lore.set(3, charge.toString());
 		meta.setLore(lore);
 		item.setItemMeta(meta);
+	}
+	private int amountPerPortal(Player p) {
+		int baseConsume = 6;
+		int discount = 0;
+		if(getPortalExit(p.getName(), "cyan")== null) {
+			discount++;
+		}
+		if(getPortalExit(p.getName(), "orange")== null) {
+			discount++;
+		}
+		return baseConsume - discount;
 	}
 	private boolean checkCharges(Player p, ItemStack item) {
 		ItemMeta meta = item.getItemMeta();
@@ -206,8 +218,8 @@ public class RelocatorOpenGUIandCharge implements Listener {
 		yellowFlagMeta.setDisplayName("Установить "+ ChatColor.YELLOW +"ЖЁЛТУЮ "+ChatColor.RESET+"точку");
 		greenFlagMeta.setDisplayName("Установить "+ ChatColor.GREEN +"ЗЕЛЁНУЮ "+ChatColor.RESET+"точку");
 		//-------
-		cyanFlagMeta.setDisplayName("Установить "+ ChatColor.YELLOW +"БИРЮЗОВУЮ "+ChatColor.RESET+"точку");
-		orangeFlagMeta.setDisplayName("Установить "+ ChatColor.GREEN +"ОРАНЖЕНУЮ "+ChatColor.RESET+"точку");
+		cyanFlagMeta.setDisplayName("Установить "+ ChatColor.DARK_AQUA +"БИРЮЗОВУЮ "+ChatColor.RESET+"точку");
+		orangeFlagMeta.setDisplayName("Установить "+ ChatColor.GOLD +"ОРАНЖЕНУЮ "+ChatColor.RESET+"точку");
 		//-------
 		
 		redItem.setItemMeta(redMeta);
