@@ -79,9 +79,11 @@ public class RelocatorGUIListener implements Listener {
 			if (e.getCurrentItem().getType().equals(Material.MUSIC_DISC_PIGSTEP)) {
 				if(getPortalExit(p.getName(), "orange")!= null) {
 					e.setCancelled(true);
+					return;
 				}
 				if(!p.getInventory().contains(new ItemStack(Material.MUSIC_DISC_PIGSTEP))) {
 					e.setCancelled(true);
+					return;
 				}
 				p.getInventory().remove(new ItemStack(Material.MUSIC_DISC_PIGSTEP));
 				p.sendMessage(ChatColor.GREEN+"Э.П.У.П.Т. улучшен!");
@@ -92,9 +94,11 @@ public class RelocatorGUIListener implements Listener {
 			if (e.getCurrentItem().getType().equals(Material.MUSIC_DISC_5)) {
 				if(getPortalExit(p.getName(), "cyan")!= null) {
 					e.setCancelled(true);
+					return;
 				}
 				if(!p.getInventory().contains(new ItemStack(Material.MUSIC_DISC_5))) {
 					e.setCancelled(true);
+					return;
 				}
 				p.getInventory().remove(new ItemStack(Material.MUSIC_DISC_5));
 				p.sendMessage(ChatColor.GREEN+"Э.П.У.П.Т. улучшен!");
