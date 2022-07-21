@@ -59,6 +59,49 @@ public class RelocatorGUIListener implements Listener {
 				p.closeInventory();
 				openGUIClass.openGUI(p);
 			}
+			
+			if (e.getCurrentItem().getType().equals(Material.CYAN_BANNER)) {
+				if(getPortalExit(p.getName(), "cyan")== null) {
+					e.setCancelled(true);
+				}
+				locToConfig(p.getName(),"cyan",p.getLocation());
+				p.closeInventory();
+				openGUIClass.openGUI(p);
+			}
+			if (e.getCurrentItem().getType().equals(Material.ORANGE_BANNER)) {
+				if(getPortalExit(p.getName(), "orange")== null) {
+					e.setCancelled(true);
+				}
+				locToConfig(p.getName(),"orange",p.getLocation());
+				p.closeInventory();
+				openGUIClass.openGUI(p);
+			}
+			if (e.getCurrentItem().getType().equals(Material.MUSIC_DISC_PIGSTEP)) {
+				if(getPortalExit(p.getName(), "orange")!= null) {
+					e.setCancelled(true);
+				}
+				if(!p.getInventory().contains(new ItemStack(Material.MUSIC_DISC_PIGSTEP))) {
+					e.setCancelled(true);
+				}
+				p.getInventory().remove(new ItemStack(Material.MUSIC_DISC_PIGSTEP));
+				p.sendMessage(ChatColor.GREEN+"Э.П.У.П.Т. улучшен!");
+				locToConfig(p.getName(),"orange",p.getLocation());
+				p.closeInventory();
+				openGUIClass.openGUI(p);
+			}
+			if (e.getCurrentItem().getType().equals(Material.MUSIC_DISC_5)) {
+				if(getPortalExit(p.getName(), "cyan")!= null) {
+					e.setCancelled(true);
+				}
+				if(!p.getInventory().contains(new ItemStack(Material.MUSIC_DISC_5))) {
+					e.setCancelled(true);
+				}
+				p.getInventory().remove(new ItemStack(Material.MUSIC_DISC_5));
+				p.sendMessage(ChatColor.GREEN+"Э.П.У.П.Т. улучшен!");
+				locToConfig(p.getName(),"cyan",p.getLocation());
+				p.closeInventory();
+				openGUIClass.openGUI(p);
+			}
 	
 			if (e.getCurrentItem().getType().equals(Material.RED_CONCRETE)) {
 				changeColor(p, ChatColor.RED, "red");
@@ -71,6 +114,18 @@ public class RelocatorGUIListener implements Listener {
 			}
 			if (e.getCurrentItem().getType().equals(Material.LIME_CONCRETE)) {
 				changeColor(p, ChatColor.GREEN, "green");
+			}
+			if (e.getCurrentItem().getType().equals(Material.CYAN_CONCRETE)) {
+				if(getPortalExit(p.getName(), "cyan")== null) {
+					e.setCancelled(true);
+				}
+				changeColor(p, ChatColor.DARK_AQUA, "cyan");
+			}
+			if (e.getCurrentItem().getType().equals(Material.ORANGE_CONCRETE)) {
+				if(getPortalExit(p.getName(), "orange")== null) {
+					e.setCancelled(true);
+				}
+				changeColor(p, ChatColor.GOLD, "orange");
 			}
 			e.setCancelled(true);
 		}
@@ -99,4 +154,20 @@ public class RelocatorGUIListener implements Listener {
 			e1.printStackTrace();
 		}
 	 }
+	private Location getPortalExit(String name, String color) { //TODO ПРОБЛЕМА ТУТ
+		File file = new File(plugin.getDataFolder() + File.separator + "Relocator.yml");
+		FileConfiguration f = YamlConfiguration.loadConfiguration(file);
+		
+		try {
+			Location loc = new Location(Bukkit.getServer().getWorld(
+					f.getString("relocator." + name +"."+ color +".world")),
+					f.getDouble("relocator." + name +"."+ color +".x"),
+					f.getDouble("relocator." + name +"."+ color +".y"),
+					f.getDouble("relocator." + name +"."+ color +".z"));
+			return loc;
+		} catch(IllegalArgumentException e1) {
+			
+		}
+		return null;
+	}
 }

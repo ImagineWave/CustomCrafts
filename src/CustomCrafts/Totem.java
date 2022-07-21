@@ -26,8 +26,6 @@ public class Totem implements Listener{
 		return;
 	}
 	
-	public HashMap<Player , ItemStack[]> items = new HashMap<Player , ItemStack[]>();
-	
 	public boolean playerHasTotem(Player p) {
 		for (ItemStack item : p.getInventory().getContents()) {
             if(checkTotem(item)) {

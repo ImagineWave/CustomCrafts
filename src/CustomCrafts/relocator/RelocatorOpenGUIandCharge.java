@@ -2,6 +2,7 @@ package CustomCrafts.relocator;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -231,21 +232,41 @@ public class RelocatorOpenGUIandCharge implements Listener {
 		gui.setItem(12, blueItem);
 		gui.setItem(14, yellowItem);
 		gui.setItem(16, greenItem);
+		gui.setItem(29, cyanItem);
+		gui.setItem(33, orangeItem);
 		//-------
 		
 		gui.setItem(1, redFlagItem);
 		gui.setItem(3, blueFlagItem);
 		gui.setItem(5, yellowFlagItem);
 		gui.setItem(7, greenFlagItem);
+		gui.setItem(20, cyanFlagItem);
+		gui.setItem(24, orangeFlagItem);
 		//-------
 		ItemStack cyanUpgrade = new ItemStack(Material.MUSIC_DISC_5);
 		ItemStack orangeUpgrade = new ItemStack(Material.MUSIC_DISC_PIGSTEP);
+		ItemMeta cyanUpgradeMeta = cyanUpgrade.getItemMeta();
+		ItemMeta orangeUpgradeMeta = orangeUpgrade.getItemMeta();
+		cyanUpgradeMeta.setDisplayName("Добавить бирюзовую точку");
+		orangeUpgradeMeta.setDisplayName("Добавить оранжевую точку");
+		
+		List<String> cyanLore = new ArrayList<>();
+		cyanLore.add("Для улучшения требуется");
+		cyanLore.add("пластинка §3#5");
+		cyanUpgradeMeta.setLore(cyanLore);
+		cyanUpgrade.setItemMeta(cyanUpgradeMeta);
+		
+		List<String> orangeLore = new ArrayList<>();
+		orangeLore.add("Для улучшения требуется");
+		orangeLore.add("пластинка §6Pigstep");
+		orangeUpgradeMeta.setLore(orangeLore);
+		orangeUpgrade.setItemMeta(orangeUpgradeMeta);
 		
 		if(cyanItem.getType().equals(Material.WHITE_CONCRETE)) {
-			
+			gui.setItem(20, cyanUpgrade);
 		}
 		if(orangeItem.getType().equals(Material.WHITE_CONCRETE)) {
-			
+			gui.setItem(24, orangeUpgrade);
 		}
 		p.openInventory(gui);
 	}
