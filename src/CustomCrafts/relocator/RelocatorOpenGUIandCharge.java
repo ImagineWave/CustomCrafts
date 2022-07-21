@@ -313,7 +313,9 @@ public class RelocatorOpenGUIandCharge implements Listener {
 	private Location getPortalExit(String name, String color) { //TODO ПРОБЛЕМА ТУТ
 		File file = new File(plugin.getDataFolder() + File.separator + "Relocator.yml");
 		FileConfiguration f = YamlConfiguration.loadConfiguration(file);
-		
+		if(color.equalsIgnoreCase("точка не выбрана")) {
+			return null;
+		}
 		try {
 			Location loc = new Location(Bukkit.getServer().getWorld(
 					f.getString("relocator." + name +"."+ color +".world")),
