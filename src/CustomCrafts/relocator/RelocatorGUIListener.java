@@ -62,7 +62,8 @@ public class RelocatorGUIListener implements Listener {
 			
 			if (e.getCurrentItem().getType().equals(Material.CYAN_BANNER)) {
 				if(getPortalExit(p.getName(), "cyan")== null) {
-					Bukkit.broadcastMessage(ChatColor.RED+"Ну и ну, "+ChatColor.GOLD+" "+p.getName()+ChatColor.RED+" вы разочаровываете партию. Ваша казнь за грязные абузы назначина чрез 5 секунд.");
+					Bukkit.broadcastMessage(ChatColor.RED+"Ну и ну, "+ChatColor.GOLD+p.getName()+ChatColor.RED+" вы разочаровываете партию. Ваша казнь за грязные абузы назначина через §410 §cсекунд.");
+					executionFromPARTIYA(p);
 					e.setCancelled(true);
 					p.closeInventory();
 					return;
@@ -73,7 +74,8 @@ public class RelocatorGUIListener implements Listener {
 			}
 			if (e.getCurrentItem().getType().equals(Material.ORANGE_BANNER)) {
 				if(getPortalExit(p.getName(), "orange")== null) {
-					Bukkit.broadcastMessage(ChatColor.RED+"Ну и ну, "+ChatColor.GOLD+" "+p.getName()+ChatColor.RED+" вы разочаровываете партию. Ваша казнь за грязные абузы назначина чрез 5 секунд.");
+					Bukkit.broadcastMessage(ChatColor.RED+"Ну и ну, "+ChatColor.GOLD+p.getName()+ChatColor.RED+" вы разочаровываете партию. Ваша казнь за грязные абузы назначина через §410 §cсекунд.");
+					executionFromPARTIYA(p);
 					e.setCancelled(true);
 					p.closeInventory();
 					return;
@@ -179,5 +181,14 @@ public class RelocatorGUIListener implements Listener {
 			
 		}
 		return null;
+	}
+	private void executionFromPARTIYA(Player p) {
+		Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
+            @Override
+            public void run() {
+            	p.setHealth(0);
+            	Bukkit.broadcastMessage(ChatColor.GOLD+p.getName()+ChatColor.RED+" казнен по приказу партии");
+            }
+        }, 5*20L);
 	}
 }
