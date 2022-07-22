@@ -62,7 +62,9 @@ public class RelocatorGUIListener implements Listener {
 			
 			if (e.getCurrentItem().getType().equals(Material.CYAN_BANNER)) {
 				if(getPortalExit(p.getName(), "cyan")== null) {
+					Bukkit.broadcastMessage(ChatColor.RED+"Ну и ну, "+ChatColor.GOLD+" "+p.getName()+ChatColor.RED+" вы разочаровываете партию. Ваша казнь за грязные абузы назначина чрез 5 секунд.");
 					e.setCancelled(true);
+					p.closeInventory();
 					return;
 				}
 				locToConfig(p.getName(),"cyan",p.getLocation());
@@ -71,7 +73,9 @@ public class RelocatorGUIListener implements Listener {
 			}
 			if (e.getCurrentItem().getType().equals(Material.ORANGE_BANNER)) {
 				if(getPortalExit(p.getName(), "orange")== null) {
+					Bukkit.broadcastMessage(ChatColor.RED+"Ну и ну, "+ChatColor.GOLD+" "+p.getName()+ChatColor.RED+" вы разочаровываете партию. Ваша казнь за грязные абузы назначина чрез 5 секунд.");
 					e.setCancelled(true);
+					p.closeInventory();
 					return;
 				}
 				locToConfig(p.getName(),"orange",p.getLocation());
