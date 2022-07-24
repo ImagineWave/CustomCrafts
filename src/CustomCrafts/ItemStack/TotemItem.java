@@ -16,6 +16,7 @@ public class TotemItem {
 		List<String> lore = new ArrayList<String>();
 		meta.addEnchant(Enchantment.DURABILITY, 1 , true);
 		lore.add("§6Сохраняет инвентарь и опыт при смерти");
+		lore.add("§4Испольуются срузу ВСЕ тотемы");
 		meta.setLore(lore);
 		item.setItemMeta(meta);
 		return item;
