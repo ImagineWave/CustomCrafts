@@ -17,7 +17,7 @@ public class SoulFeatherItem {
 		meta.addEnchant(Enchantment.DURABILITY, 1 , true);
 		lore.add("§4Постоянный полет");
 		lore.add("§eВладелец");
-		lore.add("");
+		lore.add("-");
 		lore.add("§aПосле смерти");
 		lore.add("§aвернется к владельцу");
 		meta.setLore(lore);
