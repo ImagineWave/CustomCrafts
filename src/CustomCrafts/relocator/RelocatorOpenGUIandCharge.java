@@ -120,19 +120,20 @@ public class RelocatorOpenGUIandCharge implements Listener {
 	private int amountPerPortal(Player p) {
 		int baseConsume = 6;
 		int discount = 0;
-		if(getPortalExit(p.getName(), "cyan")== null) {
+		if(getPortalExit(p.getName(), "cyan")!= null) {
 			discount++;
 		}
-		if(getPortalExit(p.getName(), "orange")== null) {
+		if(getPortalExit(p.getName(), "orange")!= null) {
 			discount++;
 		}
 		return baseConsume - discount;
 	}
 	private boolean checkCharges(Player p, ItemStack item) {
+		int count = amountPerPortal(p);
 		ItemMeta meta = item.getItemMeta();
 		List<String> lore = item.getItemMeta().getLore();
 		Integer charge = Integer.parseInt(lore.get(3));
-		return charge>=2;
+		return charge>=count;
 	}
 	public void openGUI(Player p) {
 		String guiName = "§3Открытие и настройка портала";

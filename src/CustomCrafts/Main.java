@@ -67,6 +67,7 @@ private static Main instance;
 		craftRemover();
 		craftLight();
 		craftRelocator();
+		craftBedrock();
 		}
 	
 	public void onDisable(){
@@ -257,7 +258,7 @@ private static Main instance;
 		
 		Bukkit.getServer().addRecipe(itemRecipe);
 	}
-	public void craftBedrock() {
+	private void craftBedrock() {
 		ItemStack item = new ItemStack(Material.BEDROCK);
 		NamespacedKey itemKey = new NamespacedKey(this, "bedrock_key");
 		ShapedRecipe itemRecipe = new ShapedRecipe(itemKey, item);
