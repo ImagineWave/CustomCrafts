@@ -1,4 +1,4 @@
-package CustomCrafts;
+package customCrafts;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

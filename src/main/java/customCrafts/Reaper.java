@@ -1,4 +1,4 @@
-package CustomCrafts;
+package customCrafts;
 
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;

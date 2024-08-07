@@ -1,4 +1,4 @@
-package CustomCrafts.ItemStack;
+package customCrafts.itemStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,15 +8,18 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class TotemItem {
+public class SoulFeatherItem {
 	public static ItemStack getItem() {
-		ItemStack item = new ItemStack(Material.TOTEM_OF_UNDYING);
+		ItemStack item = new ItemStack(Material.FEATHER);
 		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName("§a§lБессмертие");
+		meta.setDisplayName("§6Перо Души");
 		List<String> lore = new ArrayList<String>();
 		meta.addEnchant(Enchantment.DURABILITY, 1 , true);
-		lore.add("§6Сохраняет инвентарь и опыт при смерти");
-		lore.add("§4Испольуются срузу ВСЕ тотемы");
+		lore.add("§4Постоянный полет");
+		lore.add("§eВладелец");
+		lore.add("-");
+		lore.add("§aПосле смерти");
+		lore.add("§aвернется к владельцу");
 		meta.setLore(lore);
 		item.setItemMeta(meta);
 		return item;

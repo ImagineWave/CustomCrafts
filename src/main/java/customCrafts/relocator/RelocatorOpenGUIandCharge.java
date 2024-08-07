@@ -1,4 +1,4 @@
-package CustomCrafts.relocator;
+package customCrafts.relocator;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,7 +26,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import CustomCrafts.Main;
+import customCrafts.Main;
 import net.md_5.bungee.api.ChatColor;
 
 public class RelocatorOpenGUIandCharge implements Listener {

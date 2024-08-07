@@ -1,4 +1,4 @@
-package CustomCrafts;
+package customCrafts;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,17 +13,17 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
-import CustomCrafts.ItemStack.CheapPickaxeItem;
-import CustomCrafts.ItemStack.ChronosItem;
-import CustomCrafts.ItemStack.CompassItem;
-import CustomCrafts.ItemStack.DestroyerItem;
-import CustomCrafts.ItemStack.EthernalFeatherItem;
-import CustomCrafts.ItemStack.NotchedPickaxeItem;
-import CustomCrafts.ItemStack.ReaperItem;
-import CustomCrafts.ItemStack.RelocatorItem;
-import CustomCrafts.ItemStack.SoulFeatherItem;
-import CustomCrafts.ItemStack.StrongAxeItem;
-import CustomCrafts.ItemStack.TotemItem;
+import customCrafts.itemStack.CheapPickaxeItem;
+import customCrafts.itemStack.ChronosItem;
+import customCrafts.itemStack.CompassItem;
+import customCrafts.itemStack.DestroyerItem;
+import customCrafts.itemStack.EthernalFeatherItem;
+import customCrafts.itemStack.NotchedPickaxeItem;
+import customCrafts.itemStack.ReaperItem;
+import customCrafts.itemStack.RelocatorItem;
+import customCrafts.itemStack.SoulFeatherItem;
+import customCrafts.itemStack.StrongAxeItem;
+import customCrafts.itemStack.TotemItem;
 
 public class Main extends JavaPlugin {
 
@@ -45,12 +45,12 @@ private static Main instance;
 		Bukkit.getServer().getPluginManager().registerEvents(new NotchedPickaxe(this), this);
 		Bukkit.getServer().getPluginManager().registerEvents(new Remover(this), this);
 		Bukkit.getServer().getPluginManager().registerEvents(new StrongAxe2(this), this);
-		Bukkit.getServer().getPluginManager().registerEvents(new CustomCrafts.relocator.RelocatorGUIListener(this), this);
-		Bukkit.getServer().getPluginManager().registerEvents(new CustomCrafts.relocator.RelocatorOpenGUIandCharge(this), this);
+		Bukkit.getServer().getPluginManager().registerEvents(new customCrafts.relocator.RelocatorGUIListener(this), this);
+		Bukkit.getServer().getPluginManager().registerEvents(new customCrafts.relocator.RelocatorOpenGUIandCharge(this), this);
 		
 		//BukkitTask globalCheck = new StrongAxe(this).runTaskTimer(this, 0, 30L);
 		
-		getCommand("givecustomitem").setExecutor(new giveCustomItem(this));
+		getCommand("givecustomitem").setExecutor(new GiveCustomItem(this));
 		craftClock();
 		craftAngel();
 		craftEnchantedGoldenApple();

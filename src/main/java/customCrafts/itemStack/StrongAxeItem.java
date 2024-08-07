@@ -1,4 +1,4 @@
-package CustomCrafts.ItemStack;
+package customCrafts.itemStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,19 +8,17 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class DestroyerItem {
+public class StrongAxeItem {
 	public static ItemStack getItem() {
-		ItemStack item = new ItemStack(Material.GOLDEN_SHOVEL);
+		ItemStack item = new ItemStack(Material.NETHERITE_AXE);
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName("§5Разрушитель");
+        meta.setDisplayName("§c§lСлепая Ярость");
         List<String> lore = new ArrayList<String>();
-        lore.add("Уничтожет любой блок");
-        lore.add("§eОсталось зарядов");
-        lore.add("0");
+        lore.add("Убить их всех!");
         meta.setLore(lore);
+        meta.addEnchant(Enchantment.DAMAGE_ALL, 10 , true);
+        meta.addEnchant(Enchantment.DIG_SPEED, 5 , true);
         meta.setUnbreakable(true);
-		meta.addEnchant(Enchantment.SILK_TOUCH, 1 , true);
-		meta.addEnchant(Enchantment.DIG_SPEED, 10 , true);
         item.setItemMeta(meta);
         return item;
 	}

@@ -1,4 +1,4 @@
-package CustomCrafts;
+package customCrafts;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,10 +42,10 @@ public class Lightning implements Listener{
 		if(item.getType()!=Material.GOLDEN_SWORD) return false;
 		if(!item.getItemMeta().hasDisplayName()) return false;
 		if(!item.getItemMeta().hasLore()) return false;
-		if(!item.getItemMeta().getDisplayName().equals("§a§eКопьё Молний")) return false;
-		if(!item.getItemMeta().getLore().get(0).equals("Осталось использований")) return false;
+		if(!item.getItemMeta().getDisplayName().equals("пїЅaпїЅeпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ")) return false;
+		if(!item.getItemMeta().getLore().get(0).equals("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ")) return false;
 		if(item.getItemMeta().hasDisplayName() && item.getItemMeta().hasLore()) {
-			if(item.getItemMeta().getDisplayName().equals("§a§lБессмертие") && item.getItemMeta().getLore().get(0).equals("§6Сохраняет инвентарь и опыт при смерти")){
+			if(item.getItemMeta().getDisplayName().equals("пїЅaпїЅlпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ") && item.getItemMeta().getLore().get(0).equals("пїЅ6пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ")){
 				return true;
 			}
 		}

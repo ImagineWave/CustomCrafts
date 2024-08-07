@@ -1,4 +1,4 @@
-package CustomCrafts;
+package customCrafts;
 
 import java.util.List;
 
@@ -13,21 +13,21 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import CustomCrafts.ItemStack.CheapPickaxeItem;
-import CustomCrafts.ItemStack.ChronosItem;
-import CustomCrafts.ItemStack.CompassItem;
-import CustomCrafts.ItemStack.DestroyerItem;
-import CustomCrafts.ItemStack.EthernalFeatherItem;
-import CustomCrafts.ItemStack.NotchedPickaxeItem;
-import CustomCrafts.ItemStack.ReaperItem;
-import CustomCrafts.ItemStack.RelocatorItem;
-import CustomCrafts.ItemStack.SoulFeatherItem;
-import CustomCrafts.ItemStack.StrongAxeItem;
-import CustomCrafts.ItemStack.TotemItem;
+import customCrafts.itemStack.CheapPickaxeItem;
+import customCrafts.itemStack.ChronosItem;
+import customCrafts.itemStack.CompassItem;
+import customCrafts.itemStack.DestroyerItem;
+import customCrafts.itemStack.EthernalFeatherItem;
+import customCrafts.itemStack.NotchedPickaxeItem;
+import customCrafts.itemStack.ReaperItem;
+import customCrafts.itemStack.RelocatorItem;
+import customCrafts.itemStack.SoulFeatherItem;
+import customCrafts.itemStack.StrongAxeItem;
+import customCrafts.itemStack.TotemItem;
 
-public class giveCustomItem implements CommandExecutor{
+public class GiveCustomItem implements CommandExecutor{
 	private Main plugin;
-	public giveCustomItem(Main plugin) {
+	public GiveCustomItem(Main plugin) {
 		this.plugin = plugin;
 	}
 

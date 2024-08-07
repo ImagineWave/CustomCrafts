@@ -1,4 +1,4 @@
-package CustomCrafts;
+package customCrafts;
 
 import java.io.File;
 import java.util.List;

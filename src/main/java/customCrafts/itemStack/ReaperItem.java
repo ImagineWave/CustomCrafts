@@ -1,4 +1,4 @@
-package CustomCrafts.ItemStack;
+package customCrafts.itemStack;
 
 import java.util.ArrayList;
 import java.util.List;

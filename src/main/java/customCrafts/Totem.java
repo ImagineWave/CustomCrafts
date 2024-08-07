@@ -1,4 +1,4 @@
-package CustomCrafts;
+package customCrafts;
 
 import java.util.HashMap;
 

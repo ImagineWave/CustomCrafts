@@ -1,4 +1,4 @@
-package CustomCrafts;
+package customCrafts;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,13 +30,13 @@ public class Contract implements Listener{
 	ItemStack item = e.getPlayer().getInventory().getItemInMainHand();
 	if(!item.getItemMeta().hasDisplayName()) return;
 	if(!item.getItemMeta().hasLore()) return;
-	if(!item.getItemMeta().getDisplayName().equals("§a§lКонтракт")) return;
-	if(!item.getItemMeta().getLore().get(0).equals("Позволяет создавать")) return;
+	if(!item.getItemMeta().getDisplayName().equals("пїЅaпїЅlпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ")) return;
+	if(!item.getItemMeta().getLore().get(0).equals("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ")) return;
 	if(item.getAmount()>1) {
-		p.sendMessage("§cВ руке должен быть только один контракт");
+		p.sendMessage("пїЅcпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
 		return;
 	}
-	//Если начнут абузить добавить сюда проверку на права
+	//пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 	consumeSoul(p);
 	return;
 	}
@@ -46,7 +46,7 @@ public class Contract implements Listener{
 		p.setMaxHealth(p.getMaxHealth()-2);
 		} catch (IllegalArgumentException e1) {
 			e1.printStackTrace();
-			p.sendMessage("§cВаша душа слишком измучена");
+			p.sendMessage("пїЅcпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
 			return;
 		}
 		addSoulShard(p);
@@ -60,15 +60,15 @@ public class Contract implements Listener{
 			addSoulShard(p);
 			return;
 		}
-		p.sendMessage("§cВаша душа слишком измучена");
+		p.sendMessage("пїЅcпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
 		return;
 	}
 	public void addSoulShard(Player p) {
 		ItemStack item = new ItemStack(Material.PLAYER_HEAD);
 		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName("§4Осколок души");
+		meta.setDisplayName("пїЅ4пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ");
 		List<String> lore = new ArrayList<String>();
-		lore.add("§6Душа игрока");
+		lore.add("пїЅ6пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ");
 		lore.add(p.getName());
 		meta.setLore(lore);
 		item.setItemMeta(meta);
@@ -103,7 +103,7 @@ public class Contract implements Listener{
 		FileConfiguration users = YamlConfiguration.loadConfiguration(players);
 		List<String> list = users.getStringList("users");//govno ebanoe
 		if(list.contains(p.getName())) return;
-		Bukkit.broadcastMessage("§4"+p.getName()+"§c расколол свою душу");
+		Bukkit.broadcastMessage("пїЅ4"+p.getName()+"пїЅc пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ");
 		list.add(p.getName());
 		users.set("users", list);
 		try {
