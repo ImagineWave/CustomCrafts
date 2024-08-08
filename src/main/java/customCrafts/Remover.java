@@ -79,6 +79,11 @@ public class Remover implements Listener{
 		return charge>=20;
 	}
 	private void removeBlock(Block b, Player p) {
+		if(b.getType() == Material.REINFORCED_DEEPSLATE){
+			if(Math.random()>0.8) {
+				deepslateDrop(p);
+			}
+		}
 		b.setType(Material.AIR);
 		ItemStack item = p.getInventory().getItemInMainHand();
 		ItemMeta meta = item.getItemMeta();
@@ -88,5 +93,11 @@ public class Remover implements Listener{
 		lore.set(2, charge.toString());
 		meta.setLore(lore);
 		item.setItemMeta(meta);
+	}
+	private void deepslateDrop(Player p){
+		ItemStack deepslate = new ItemStack(Material.REINFORCED_DEEPSLATE);
+		p.getInventory().addItem(deepslate);
+		p.sendMessage("§aВы получили кусочек сланца");
+		return;
 	}
 }

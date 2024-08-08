@@ -3,6 +3,7 @@ package customCrafts;
 import java.util.ArrayList;
 import java.util.List;
 
+import customCrafts.recipes.QualityOfLifeRecipes;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -49,23 +50,21 @@ private static Main instance;
 		Bukkit.getServer().getPluginManager().registerEvents(new customCrafts.relocator.RelocatorOpenGUIandCharge(this), this);
 		
 		//BukkitTask globalCheck = new StrongAxe(this).runTaskTimer(this, 0, 30L);
+
+		QualityOfLifeRecipes qualityOfLifeRecipes = new QualityOfLifeRecipes(this);
 		
 		getCommand("givecustomitem").setExecutor(new GiveCustomItem(this));
 		craftClock();
 		craftAngel();
-		craftEnchantedGoldenApple();
-		craftPhantomMembrane();
 		craftReaper();
 		craftTotem();
 		//craftContract();
 		craftCompass();
-		craftTrident();
 		//craftSoulFeather();
 		craftNotchedPickaxe();
 		craftCheapPickaxe();
 		craftStrongAxe();
 		craftRemover();
-		craftLight();
 		craftRelocator();
 		craftBedrock();
 		}
@@ -98,24 +97,7 @@ private static Main instance;
 		angelrecipe.setIngredient('B', Material.NETHERITE_BLOCK);
 		Bukkit.getServer().addRecipe(angelrecipe);
 	}
-	public void craftEnchantedGoldenApple() {
-		ItemStack egapple = new ItemStack(Material.ENCHANTED_GOLDEN_APPLE);
-		NamespacedKey egappleKey = new NamespacedKey(this, "egapple_key");
-		ShapedRecipe egappleRecipe = new ShapedRecipe(egappleKey, egapple);
-		egappleRecipe.shape("AAA","ABA","AAA");
-		egappleRecipe.setIngredient('A', Material.GOLD_BLOCK);
-		egappleRecipe.setIngredient('B', Material.APPLE);
-		Bukkit.getServer().addRecipe(egappleRecipe);
-	}
-	public void craftPhantomMembrane() {
-		ItemStack membrane = new ItemStack(Material.PHANTOM_MEMBRANE);
-		NamespacedKey membraneKey = new NamespacedKey(this, "membrane_key");
-		ShapedRecipe membraneRecipe = new ShapedRecipe(membraneKey, membrane);
-		membraneRecipe.shape(" A ","ABA"," A ");
-		membraneRecipe.setIngredient('A', Material.STRING);
-		membraneRecipe.setIngredient('B', Material.LEATHER);
-		Bukkit.getServer().addRecipe(membraneRecipe);
-	}	
+
 	
 	public void craftReaper() {
 		ItemStack item = ReaperItem.getItem();
@@ -162,16 +144,6 @@ private static Main instance;
 		itemRecipe.setIngredient('B', Material.COMPASS);
 		itemRecipe.setIngredient('C', Material.DRAGON_BREATH);
 		itemRecipe.setIngredient('D', Material.IRON_BLOCK);
-		Bukkit.getServer().addRecipe(itemRecipe);
-	}
-	public void craftTrident() {
-		ItemStack item = new ItemStack(Material.TRIDENT);
-		NamespacedKey itemKey = new NamespacedKey(this, "trident_key");
-		ShapedRecipe itemRecipe = new ShapedRecipe(itemKey, item);
-		itemRecipe.shape("AA ","AB ","  C");
-		itemRecipe.setIngredient('A', Material.PRISMARINE_SHARD);
-		itemRecipe.setIngredient('B', Material.HEART_OF_THE_SEA);
-		itemRecipe.setIngredient('C', Material.NETHER_STAR);
 		Bukkit.getServer().addRecipe(itemRecipe);
 	}
 	public void craftSoulFeather() {
@@ -225,24 +197,7 @@ private static Main instance;
         itemRecipe.setIngredient('B', Material.IRON_BLOCK);
         Bukkit.getServer().addRecipe(itemRecipe);
     }
-	public void craftLight() {
-		ItemStack item = new ItemStack(Material.LIGHT);
-		ItemMeta meta = item.getItemMeta();
-		List<String> lore = new ArrayList<String>();
-		lore.add("Дорого? А все потому что");
-		lore.add("невидимый свет это роскошь");
-		meta.setLore(lore);
-		item.setItemMeta(meta);
-		
-		NamespacedKey itemKey = new NamespacedKey(this, "light_key");
-		ShapedRecipe itemRecipe = new ShapedRecipe(itemKey, item);
-		itemRecipe.shape(" A ","BCB"," A ");
-		itemRecipe.setIngredient('A', Material.CANDLE);
-		itemRecipe.setIngredient('C', Material.SEA_LANTERN);
-		itemRecipe.setIngredient('B', Material.GLOW_BERRIES);
-		
-		Bukkit.getServer().addRecipe(itemRecipe);
-	}
+
 	public void craftRelocator() {
 		ItemStack item = RelocatorItem.getItem();
 		NamespacedKey itemKey = new NamespacedKey(this, "relocator_key");
