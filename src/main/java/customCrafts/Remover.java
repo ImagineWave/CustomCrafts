@@ -13,6 +13,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class Remover implements Listener{
+
+	private final int CHARGES_PER_USE = 5;
+	private final int MAX_CHARGES = 20;
+	private static long COOLDOWN = 0;
+
+
 	private Main plugin;
 	public Remover(Main plugin) {
 		this.plugin = plugin;
@@ -54,7 +60,7 @@ public class Remover implements Listener{
 		List<String> lore = item.getItemMeta().getLore();
 		Integer charge = Integer.parseInt(lore.get(2));
 		charge = charge + 1;
-		if(charge>20) return false;
+		if(charge>MAX_CHARGES) return false;
 		lore.set(2, charge.toString());
 		meta.setLore(lore);
 		item.setItemMeta(meta);
@@ -76,9 +82,12 @@ public class Remover implements Listener{
 		ItemMeta meta = item.getItemMeta();
 		List<String> lore = item.getItemMeta().getLore();
 		Integer charge = Integer.parseInt(lore.get(2));
-		return charge>=20;
+		return charge>=CHARGES_PER_USE;
 	}
 	private void removeBlock(Block b, Player p) {
+		if(!readyToUse()){
+			return;
+		}
 		if(b.getType() == Material.REINFORCED_DEEPSLATE){
 			if(Math.random()>0.8) {
 				deepslateDrop(p);
@@ -89,15 +98,24 @@ public class Remover implements Listener{
 		ItemMeta meta = item.getItemMeta();
 		List<String> lore = item.getItemMeta().getLore();
 		Integer charge = Integer.parseInt(lore.get(2));
-		charge = charge - 20;
+		charge = charge - CHARGES_PER_USE;
 		lore.set(2, charge.toString());
 		meta.setLore(lore);
 		item.setItemMeta(meta);
+		setCooldown();
 	}
 	private void deepslateDrop(Player p){
 		ItemStack deepslate = new ItemStack(Material.REINFORCED_DEEPSLATE);
 		p.getInventory().addItem(deepslate);
 		p.sendMessage("§aВы получили кусочек сланца");
 		return;
+	}
+
+	private boolean readyToUse(){
+		return plugin.DESTROYER_GLOBAL_COOLDOWN+200<=System.currentTimeMillis();
+	}
+
+	private void setCooldown(){
+		plugin.DESTROYER_GLOBAL_COOLDOWN = System.currentTimeMillis();
 	}
 }

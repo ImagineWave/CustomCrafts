@@ -21,6 +21,7 @@ public class QualityOfLifeRecipes {
     }
 
     private void init(){
+        craftStar();
         craftTrident();
         craftPhantomMembrane();
         craftLight();
@@ -31,6 +32,18 @@ public class QualityOfLifeRecipes {
         craftWeatheredCopperBlock();
         craftOxidizedCopperBlock();
         craftConcrete();
+
+
+    }
+
+    private void craftStar() {
+        ItemStack item = new ItemStack(Material.NETHER_STAR);
+        NamespacedKey itemKey = new NamespacedKey(plugin, "nether_star_key");
+        ShapedRecipe itemRecipe = new ShapedRecipe(itemKey, item);
+        itemRecipe.shape("AAA","BBB"," B ");
+        itemRecipe.setIngredient('A', Material.WITHER_SKELETON_SKULL);
+        itemRecipe.setIngredient('B', Material.SOUL_SAND);
+        Bukkit.getServer().addRecipe(itemRecipe);
     }
 
     private void craftTrident() {

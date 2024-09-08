@@ -28,7 +28,10 @@ import customCrafts.itemStack.TotemItem;
 
 public class Main extends JavaPlugin {
 
-private static Main instance;
+	private static Main instance;
+
+	public long DESTROYER_GLOBAL_COOLDOWN = 0;
+
 	
 	public static Main instance() {
 		return instance;
@@ -189,11 +192,13 @@ private static Main instance;
         ItemStack item = DestroyerItem.getItem();
         NamespacedKey itemKey = new NamespacedKey(this, "destroyer");
         ShapedRecipe itemRecipe = new ShapedRecipe(itemKey, item);
-        itemRecipe.shape("DON","BCO","BBD");
+        itemRecipe.shape(
+        		"DNN",
+				"BHN",
+				"BBD");
         itemRecipe.setIngredient('D', Material.DRAGON_BREATH);
-        itemRecipe.setIngredient('O', Material.CRYING_OBSIDIAN);
-        itemRecipe.setIngredient('N', Material.NETHERITE_BLOCK);
-        itemRecipe.setIngredient('C', Material.HEART_OF_THE_SEA);
+        itemRecipe.setIngredient('N', Material.NETHERITE_INGOT);
+        itemRecipe.setIngredient('H', Material.HEART_OF_THE_SEA);
         itemRecipe.setIngredient('B', Material.IRON_BLOCK);
         Bukkit.getServer().addRecipe(itemRecipe);
     }
