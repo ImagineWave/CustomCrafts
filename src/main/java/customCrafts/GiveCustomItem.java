@@ -2,6 +2,7 @@ package customCrafts;
 
 import java.util.List;
 
+import customCrafts.itemStack.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -12,18 +13,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import customCrafts.itemStack.CheapPickaxeItem;
-import customCrafts.itemStack.ChronosItem;
-import customCrafts.itemStack.CompassItem;
-import customCrafts.itemStack.DestroyerItem;
-import customCrafts.itemStack.EthernalFeatherItem;
-import customCrafts.itemStack.NotchedPickaxeItem;
-import customCrafts.itemStack.ReaperItem;
-import customCrafts.itemStack.RelocatorItem;
-import customCrafts.itemStack.SoulFeatherItem;
-import customCrafts.itemStack.StrongAxeItem;
-import customCrafts.itemStack.TotemItem;
 
 public class GiveCustomItem implements CommandExecutor{
 	private Main plugin;
@@ -61,9 +50,11 @@ public class GiveCustomItem implements CommandExecutor{
 	        ItemStack relocator = RelocatorItem.getItem();
 	        
 	        ItemStack totem = TotemItem.getItem();
+
+	        ItemStack ruleBook = UnlimitedRulebookItem.getItem();
 			
 			Inventory gui = Bukkit.createInventory(p, 18, "MegaOpIMBAHolyShitItems");
-			ItemStack[] imbaItems = {ethernalFeather,soulFeather,compass,notchedPickaxe,reaper,chronos,totem,cheapPickaxe,strongAxe,destroyer,relocator};
+			ItemStack[] imbaItems = {ethernalFeather,soulFeather,compass,notchedPickaxe,reaper,chronos,totem,cheapPickaxe,strongAxe,destroyer,relocator,ruleBook};
 			gui.setContents(imbaItems);
 			p.openInventory(gui);
 			return true;
@@ -186,8 +177,13 @@ public class GiveCustomItem implements CommandExecutor{
 				p.getInventory().addItem(relocator);
 			}
 			break;
+			case("book"):{
+				ItemStack book = UnlimitedRulebookItem.getItem();
+				p.getInventory().addItem(book);
+			}
+			break;
 			default:{
-				p.sendMessage("§c ethernalFeather soulFeather compass pickaxe reaper chronos cheapPickaxe strongAxe destroyer");
+				p.sendMessage("§c ethernalFeather soulFeather compass pickaxe reaper chronos cheapPickaxe strongAxe destroyer relocator book");
 			}
 		}
 		return;

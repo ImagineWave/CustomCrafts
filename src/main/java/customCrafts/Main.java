@@ -49,6 +49,7 @@ public class Main extends JavaPlugin {
 		Bukkit.getServer().getPluginManager().registerEvents(new NotchedPickaxe(this), this);
 		Bukkit.getServer().getPluginManager().registerEvents(new Remover(this), this);
 		Bukkit.getServer().getPluginManager().registerEvents(new StrongAxe2(this), this);
+		Bukkit.getServer().getPluginManager().registerEvents(new UnlimitedRulebook(this), this);
 		Bukkit.getServer().getPluginManager().registerEvents(new customCrafts.relocator.RelocatorGUIListener(this), this);
 		Bukkit.getServer().getPluginManager().registerEvents(new customCrafts.relocator.RelocatorOpenGUIandCharge(this), this);
 		
