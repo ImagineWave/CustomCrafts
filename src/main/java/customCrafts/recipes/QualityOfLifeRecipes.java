@@ -198,5 +198,6 @@ public class QualityOfLifeRecipes {
         ShapelessRecipe stickyPistonRecipe = new ShapelessRecipe(stickyPistonKey, stickyPiston);
         stickyPistonRecipe.addIngredient(1, Material.HONEY_BOTTLE);
         stickyPistonRecipe.addIngredient(1, Material.PISTON);
+        Bukkit.getServer().addRecipe(stickyPistonRecipe);
     }
 }
