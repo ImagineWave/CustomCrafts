@@ -6,6 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
+import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
@@ -26,14 +27,14 @@ public class QualityOfLifeRecipes {
         craftPhantomMembrane();
         craftLight();
         craftEnchantedGoldenApple();
+        craftConcrete();
+        craftBlackDye();
+        craftStickyPiston();
 
         //Медное бытие
         craftExposedCopperBlock();
         craftWeatheredCopperBlock();
         craftOxidizedCopperBlock();
-        craftConcrete();
-
-
     }
 
     private void craftStar() {
@@ -179,5 +180,23 @@ public class QualityOfLifeRecipes {
         oxidizedCopperRecipe.shape("AAA","AAA","AAA");
         oxidizedCopperRecipe.setIngredient('A', Material.WEATHERED_COPPER);
         Bukkit.getServer().addRecipe(oxidizedCopperRecipe);
+    }
+
+    private void craftBlackDye(){
+        ItemStack blackDye = new ItemStack(Material.BLACK_DYE);
+        blackDye.setAmount(1);
+        NamespacedKey blackDyeKey = new NamespacedKey(plugin, "black_dye_key");
+        ShapelessRecipe blackDyeRecipe = new ShapelessRecipe(blackDyeKey, blackDye);
+        blackDyeRecipe.addIngredient(1, Material.COAL);
+        Bukkit.getServer().addRecipe(blackDyeRecipe);
+    }
+
+    private void craftStickyPiston(){
+        ItemStack stickyPiston = new ItemStack(Material.STICKY_PISTON);
+        stickyPiston.setAmount(1);
+        NamespacedKey stickyPistonKey = new NamespacedKey(plugin, "sticky_piston_recipe");
+        ShapelessRecipe stickyPistonRecipe = new ShapelessRecipe(stickyPistonKey, stickyPiston);
+        stickyPistonRecipe.addIngredient(1, Material.HONEY_BOTTLE);
+        stickyPistonRecipe.addIngredient(1, Material.PISTON);
     }
 }

@@ -1,5 +1,7 @@
 package customCrafts;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.bukkit.Material;
@@ -23,6 +25,11 @@ public class Remover implements Listener{
 	public Remover(Main plugin) {
 		this.plugin = plugin;
 	}
+	private Material[] blackListArr = {
+			Material.CHEST, Material.TRAPPED_CHEST, Material.CRAFTING_TABLE, Material.DISPENSER, Material.DROPPER,
+			Material.FURNACE, Material.BLAST_FURNACE, Material.BREWING_STAND, Material.ENCHANTING_TABLE, Material.SMOKER
+	};
+
 
 	@EventHandler
 	public void onClick(PlayerInteractEvent e) {
@@ -46,6 +53,10 @@ public class Remover implements Listener{
 		if(e.getClickedBlock() == null) {
 			return;
 		}
+		if(Arrays.asList(blackListArr).contains(e.getClickedBlock().getType())){
+			return;
+		}
+
 		if(checkCharges(p,item)) {
 			removeBlock(e.getClickedBlock(), p);
 			return;
