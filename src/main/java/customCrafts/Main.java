@@ -3,7 +3,9 @@ package customCrafts;
 import java.util.ArrayList;
 import java.util.List;
 
+import customCrafts.itemStack.*;
 import customCrafts.recipes.QualityOfLifeRecipes;
+import customCrafts.service.CheapFeatherService;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -12,33 +14,21 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitTask;
-
-import customCrafts.itemStack.CheapPickaxeItem;
-import customCrafts.itemStack.ChronosItem;
-import customCrafts.itemStack.CompassItem;
-import customCrafts.itemStack.DestroyerItem;
-import customCrafts.itemStack.EthernalFeatherItem;
-import customCrafts.itemStack.NotchedPickaxeItem;
-import customCrafts.itemStack.ReaperItem;
-import customCrafts.itemStack.RelocatorItem;
-import customCrafts.itemStack.SoulFeatherItem;
-import customCrafts.itemStack.StrongAxeItem;
-import customCrafts.itemStack.TotemItem;
 
 public class Main extends JavaPlugin {
 
-	private static Main instance;
+	private static Main INSTANCE;
 
 	public long DESTROYER_GLOBAL_COOLDOWN = 0;
 
 	
-	public static Main instance() {
-		return instance;
+	public static Main getInstance() {
+		return INSTANCE;
 	}
 	
 	
 	public void onEnable() {
+		INSTANCE = this;
 		Bukkit.getServer().getPluginManager().registerEvents(new Chronos(this), this);
 		Bukkit.getServer().getPluginManager().registerEvents(new Reaper(this), this);
 		Bukkit.getServer().getPluginManager().registerEvents(new Totem(this), this);
@@ -50,16 +40,20 @@ public class Main extends JavaPlugin {
 		Bukkit.getServer().getPluginManager().registerEvents(new Remover(this), this);
 		Bukkit.getServer().getPluginManager().registerEvents(new StrongAxe2(this), this);
 		Bukkit.getServer().getPluginManager().registerEvents(new UnlimitedRulebook(this), this);
+
 		Bukkit.getServer().getPluginManager().registerEvents(new customCrafts.relocator.RelocatorGUIListener(this), this);
 		Bukkit.getServer().getPluginManager().registerEvents(new customCrafts.relocator.RelocatorOpenGUIandCharge(this), this);
-		
+		Bukkit.getServer().getPluginManager().registerEvents(CheapFeatherService.getInstance(), this);
+
+
+		CheapFeatherService.getInstance().runTaskTimer(this, 0L, 1*20L);
 		//BukkitTask globalCheck = new StrongAxe(this).runTaskTimer(this, 0, 30L);
 
 		QualityOfLifeRecipes qualityOfLifeRecipes = new QualityOfLifeRecipes(this);
 		
 		getCommand("givecustomitem").setExecutor(new GiveCustomItem(this));
 		craftClock();
-		craftAngel();
+		//craftAngel();
 		craftReaper();
 		craftTotem();
 		//craftContract();
@@ -71,6 +65,7 @@ public class Main extends JavaPlugin {
 		craftRemover();
 		craftRelocator();
 		craftBedrock();
+		craftCheapFeather();
 		}
 	
 	public void onDisable(){
@@ -226,6 +221,17 @@ public class Main extends JavaPlugin {
 		itemRecipe.shape(" A ","ABA"," A ");
 		itemRecipe.setIngredient('A', Material.REINFORCED_DEEPSLATE);
 		itemRecipe.setIngredient('B', Material.HEART_OF_THE_SEA);
+		Bukkit.getServer().addRecipe(itemRecipe);
+	}
+	public void craftCheapFeather() {
+		ItemStack item = CheapFeatherItem.getItem();
+		NamespacedKey itemKey = new NamespacedKey(this, "cheap_feather_key");
+		ShapedRecipe itemRecipe = new ShapedRecipe(itemKey, item);
+		itemRecipe.shape(" P ","IFG"," P ");
+		itemRecipe.setIngredient('P', Material.ENDER_PEARL);
+		itemRecipe.setIngredient('I', Material.IRON_BLOCK);
+		itemRecipe.setIngredient('G', Material.GOLD_BLOCK);
+		itemRecipe.setIngredient('F', Material.FEATHER);
 		Bukkit.getServer().addRecipe(itemRecipe);
 	}
 }

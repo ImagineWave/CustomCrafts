@@ -3,6 +3,7 @@ package customCrafts;
 import java.util.HashMap;
 import java.util.List;
 
+import customCrafts.service.CheapFeatherService;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -28,6 +29,9 @@ public class SoulAngel implements Listener{
 	@EventHandler
 	public void onMove(PlayerMoveEvent e) {
 		Player p = e.getPlayer();
+		if (CheapFeatherService.getInstance().isTemporaryFlying(p)) {
+			return;
+		}
 		if(!p.getGameMode().equals(GameMode.SURVIVAL)) return;
 		if(allowFly(p)) {
 			Location loc = p.getLocation();

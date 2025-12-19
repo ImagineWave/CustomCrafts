@@ -52,9 +52,11 @@ public class GiveCustomItem implements CommandExecutor{
 	        ItemStack totem = TotemItem.getItem();
 
 	        ItemStack ruleBook = UnlimitedRulebookItem.getItem();
+
+			ItemStack cheapFeather = CheapFeatherItem.getItem();
 			
 			Inventory gui = Bukkit.createInventory(p, 18, "MegaOpIMBAHolyShitItems");
-			ItemStack[] imbaItems = {ethernalFeather,soulFeather,compass,notchedPickaxe,reaper,chronos,totem,cheapPickaxe,strongAxe,destroyer,relocator,ruleBook};
+			ItemStack[] imbaItems = {ethernalFeather,soulFeather,compass,notchedPickaxe,reaper,chronos,totem,cheapPickaxe,strongAxe,destroyer,relocator,ruleBook,cheapFeather};
 			gui.setContents(imbaItems);
 			p.openInventory(gui);
 			return true;
@@ -182,8 +184,13 @@ public class GiveCustomItem implements CommandExecutor{
 				p.getInventory().addItem(book);
 			}
 			break;
+			case("cheapFeather"):{
+				ItemStack cheapFeather = CheapFeatherItem.getItem();
+				p.getInventory().addItem(cheapFeather);
+			}
+			break;
 			default:{
-				p.sendMessage("§c ethernalFeather soulFeather compass pickaxe reaper chronos cheapPickaxe strongAxe destroyer relocator book");
+				p.sendMessage("§c ethernalFeather soulFeather compass pickaxe reaper chronos cheapPickaxe strongAxe destroyer relocator book cheapFeather");
 			}
 		}
 		return;
