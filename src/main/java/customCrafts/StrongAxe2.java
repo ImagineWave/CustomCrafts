@@ -1,9 +1,11 @@
 package customCrafts;
 
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -21,9 +23,30 @@ public class StrongAxe2 implements Listener{
 		Player p = e.getPlayer();
 		if(checkAxe(p)) {
 			p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 120, 0));
-			p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 120, 1));
 		}
 	}
+
+	@EventHandler
+	public void onKill(EntityDeathEvent e) {
+		LivingEntity entity = e.getEntity();
+		Player killer = entity.getKiller();
+		if(killer == null) return;
+		if(checkAxe(killer)){
+			stackStrength(killer);
+		}
+	}
+
+	private void stackStrength(Player p){
+		int amplifier = 0;
+		if(p.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE)){
+			PotionEffect current = p.getActivePotionEffects().stream()
+					.filter(eff -> eff.getType().equals(PotionEffectType.INCREASE_DAMAGE))
+					.findFirst().get();
+			amplifier = current.getAmplifier() + 1;
+		}
+		p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 200, amplifier));
+	}
+
 	private boolean checkAxe(Player p) {
 		ItemStack item = p.getInventory().getItemInMainHand();
 		if(item.getItemMeta() == null) return false;
