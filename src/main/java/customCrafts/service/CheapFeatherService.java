@@ -112,6 +112,7 @@ public class CheapFeatherService extends BukkitRunnable implements Listener {
         FileConfiguration users = YamlConfiguration.loadConfiguration(players);
         List<String> list = users.getStringList("players");
         list.remove(p.getName());
+        users.set("players", list);
         try {
             users.save(players);
         } catch (IOException e) {
