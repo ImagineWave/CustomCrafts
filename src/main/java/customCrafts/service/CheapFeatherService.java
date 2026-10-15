@@ -3,9 +3,7 @@ package customCrafts.service;
 import customCrafts.Main;
 import customCrafts.entities.TemporaryFlyingPlayer;
 import customCrafts.itemStack.CheapFeatherItem;
-import customCrafts.itemStack.UnlimitedRulebookItem;
 import org.bukkit.Bukkit;
-import org.bukkit.Color;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -189,13 +187,10 @@ public class CheapFeatherService extends BukkitRunnable implements Listener {
 
     private boolean checkPosition(Player p, TemporaryFlyingPlayer flyingPlayer){
         Location loc = p.getLocation();
-        if(!loc.getWorld().getName().equals(flyingPlayer.getWorld())){
-            return false;
-        }
         int dx = Math.abs(loc.getBlockX() - flyingPlayer.getX());
         int dy = Math.abs(loc.getBlockY() - flyingPlayer.getY());
         int dz = Math.abs(loc.getBlockZ() - flyingPlayer.getZ());
-        return dx <= BLOCK_RANGE_LIMIT && dy <= BLOCK_RANGE_LIMIT*2 && dz <= BLOCK_RANGE_LIMIT;
+        return dx <= BLOCK_RANGE_LIMIT && dy <= BLOCK_RANGE_LIMIT*5 && dz <= BLOCK_RANGE_LIMIT;
     }
 
 

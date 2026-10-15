@@ -28,6 +28,7 @@ public class Remover implements Listener{
 	private Material[] blackListArr = {
 			Material.CHEST, Material.TRAPPED_CHEST, Material.CRAFTING_TABLE, Material.DISPENSER, Material.DROPPER,
 			Material.FURNACE, Material.BLAST_FURNACE, Material.BREWING_STAND, Material.ENCHANTING_TABLE, Material.SMOKER,
+			Material.END_PORTAL_FRAME, Material.END_PORTAL,
 
 			Material.SHULKER_BOX, Material.WHITE_SHULKER_BOX, Material.ORANGE_SHULKER_BOX, Material.MAGENTA_SHULKER_BOX,
 			Material.LIGHT_BLUE_SHULKER_BOX, Material.YELLOW_SHULKER_BOX, Material.LIME_SHULKER_BOX, Material.PINK_SHULKER_BOX,

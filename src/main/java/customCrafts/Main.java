@@ -3,6 +3,7 @@ package customCrafts;
 import java.util.ArrayList;
 import java.util.List;
 
+import customCrafts.dimensionalwarp.listener.DimensionalWarpListener;
 import customCrafts.itemStack.*;
 import customCrafts.recipes.QualityOfLifeRecipes;
 import customCrafts.service.CheapFeatherService;
@@ -44,6 +45,8 @@ public class Main extends JavaPlugin {
 		Bukkit.getServer().getPluginManager().registerEvents(new customCrafts.relocator.RelocatorGUIListener(this), this);
 		Bukkit.getServer().getPluginManager().registerEvents(new customCrafts.relocator.RelocatorOpenGUIandCharge(this), this);
 		Bukkit.getServer().getPluginManager().registerEvents(CheapFeatherService.getInstance(), this);
+
+		Bukkit.getServer().getPluginManager().registerEvents(new DimensionalWarpListener(this), this);
 
 
 		CheapFeatherService.getInstance().runTaskTimer(this, 0L, 1*20L);

@@ -1,5 +1,7 @@
 package customCrafts;
 
+import customCrafts.itemStack.CheapFeatherItem;
+import customCrafts.itemStack.StrongAxeItem;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -47,7 +49,7 @@ public class StrongAxe2 implements Listener{
 		p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 200, amplifier));
 	}
 
-	private boolean checkAxe(Player p) {
+	private boolean checkAxe2(Player p) {
 		ItemStack item = p.getInventory().getItemInMainHand();
 		if(item.getItemMeta() == null) return false;
 		if(!item.getItemMeta().hasDisplayName()) return false;
@@ -55,5 +57,17 @@ public class StrongAxe2 implements Listener{
 		if(!item.getItemMeta().getDisplayName().equals("§c§lСлепая Ярость")) return false;
 		if(!(item.getItemMeta().getLore().get(0).equals("Убить их всех!"))) return false;
 		return true;
+	}
+
+	private boolean checkAxe(Player p){
+		ItemStack playerItem = p.getInventory().getItemInMainHand();
+		ItemStack item = StrongAxeItem.getItem();
+		if(playerItem.getItemMeta() == null){
+			return false;
+		}
+		if(!playerItem.getItemMeta().hasLore()){
+			return false;
+		}
+		return (playerItem.getItemMeta().getLore().equals(item.getItemMeta().getLore()));
 	}
 }
