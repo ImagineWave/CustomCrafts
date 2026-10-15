@@ -6,3 +6,5 @@ api-version: 1.19
 commands:
     givecustomitem:
         usage:
+    dimensionalwarp:
+        usage: /dimensionalwarp

@@ -5,14 +5,14 @@ import org.bukkit.World;
 public enum DimensionalBorder {
 
     WORLD("world", "world_the_end", "world_nether",
-            true, 450, -80,
+            true, 800, -60,
             true, -120, 340),
     NETHER("world_nether", "world", null,
             true, 350, -110,
             false, 0, 0),
     END("world_the_end", null, "world",
             false, 0, 0,
-            true, -85, 440);
+            true, -65, 790);
 
     private final String worldName;
     private final String topSendToWorldName;

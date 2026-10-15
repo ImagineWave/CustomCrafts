@@ -22,7 +22,9 @@ public class Main extends JavaPlugin {
 
 	public long DESTROYER_GLOBAL_COOLDOWN = 0;
 
-	
+	public boolean dimensionalWarpEnabled = true;
+
+
 	public static Main getInstance() {
 		return INSTANCE;
 	}
@@ -30,6 +32,9 @@ public class Main extends JavaPlugin {
 	
 	public void onEnable() {
 		INSTANCE = this;
+		saveDefaultConfig();
+		dimensionalWarpEnabled = getConfig().getBoolean("dimensional-warp-enabled", true);
+
 		Bukkit.getServer().getPluginManager().registerEvents(new Chronos(this), this);
 		Bukkit.getServer().getPluginManager().registerEvents(new Reaper(this), this);
 		Bukkit.getServer().getPluginManager().registerEvents(new Totem(this), this);
@@ -55,6 +60,7 @@ public class Main extends JavaPlugin {
 		QualityOfLifeRecipes qualityOfLifeRecipes = new QualityOfLifeRecipes(this);
 		
 		getCommand("givecustomitem").setExecutor(new GiveCustomItem(this));
+		getCommand("dimensionalwarp").setExecutor(new customCrafts.dimensionalwarp.DimensionalWarpToggleCommand(this));
 		craftClock();
 		//craftAngel();
 		craftReaper();

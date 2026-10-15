@@ -21,6 +21,10 @@ public class DimensionalWarpListener implements Listener {
 
     @EventHandler
     public void onMove(PlayerMoveEvent event){
+        if (!plugin.dimensionalWarpEnabled) {
+            return;
+        }
+
         Player player = event.getPlayer();
         DimensionalBorder border = DimensionalBorder.byWorld(player.getWorld());
         if (border == null){
@@ -32,7 +36,7 @@ public class DimensionalWarpListener implements Listener {
         if (border.hasTopBorder() && y >= border.getTopTeleportBorder()) {
             World targetWorld = Bukkit.getWorld(border.getTopSendToWorldName());
             teleportToDimension(player, targetWorld, border.getTopTeleportBorderExit());
-            addVerticalImpulse(player, 5);
+            addVerticalImpulse(player, 2);
             return;
         }
 
@@ -58,6 +62,9 @@ public class DimensionalWarpListener implements Listener {
     }
 
     private void addVerticalImpulse(Player player, double verticalImpulse) {
+        if (player.isFlying()) {
+            player.setFlying(false);
+        }
         player.setVelocity(player.getVelocity().add(new Vector(0, verticalImpulse, 0)));
     }
 
