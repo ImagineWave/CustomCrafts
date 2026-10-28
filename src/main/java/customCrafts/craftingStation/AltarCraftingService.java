@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -132,17 +133,75 @@ public class AltarCraftingService implements Listener {
 	 */
 	public void checkRecipe(Inventory gui) {
 		int[][] slotGrid = guiToCraftingGrid(gui);
+		ItemStack[][] itemGrid = readItemGrid(gui, slotGrid);
+
+		Optional<AltarRecipe> match = findMatch(itemGrid);
+
+		Bukkit.getScheduler().runTaskLater(plugin, () ->
+				gui.setItem(RESULT_SLOT, match.map(recipe -> recipe.getResult().clone()).orElse(emptyResultPane())),
+				1L);
+	}
+
+	/**
+	 * Вызывается после забора предмета из {@link #RESULT_SLOT}: списывает из крафтовой сетки
+	 * ингредиенты рецепта, совпавшего с её текущим содержимым, и пересчитывает результат
+	 * (при наличии достаточного количества ингредиентов результат появится снова).
+	 */
+	public void consumeIngredientsForResult(Inventory gui) {
+		int[][] slotGrid = guiToCraftingGrid(gui);
+		ItemStack[][] itemGrid = readItemGrid(gui, slotGrid);
+
+		findMatch(itemGrid).ifPresent(recipe -> {
+			consumeIngredients(gui, recipe, slotGrid);
+			checkRecipe(gui);
+		});
+	}
+
+	private ItemStack[][] readItemGrid(Inventory gui, int[][] slotGrid) {
 		ItemStack[][] itemGrid = new ItemStack[GRID_SIZE][GRID_SIZE];
 		for (int row = 0; row < GRID_SIZE; row++) {
 			for (int col = 0; col < GRID_SIZE; col++) {
 				itemGrid[row][col] = gui.getItem(slotGrid[row][col]);
 			}
 		}
+		return itemGrid;
+	}
 
-		Optional<AltarRecipe> match = findMatch(itemGrid);
+	private void consumeIngredients(Inventory gui, AltarRecipe recipe, int[][] slotGrid) {
+		char[][] pattern = recipe.getPattern();
 
-		Bukkit.getScheduler().runTaskLater(plugin, () ->
-				gui.setItem(RESULT_SLOT, match.map(recipe -> recipe.getResult().clone()).orElse(null)),
-				1L);
+		for (int row = 0; row < GRID_SIZE; row++) {
+			for (int col = 0; col < GRID_SIZE; col++) {
+				char symbol = pattern[row][col];
+				if (symbol == EMPTY_SLOT) {
+					continue;
+				}
+
+				int slot = slotGrid[row][col];
+				ItemStack actual = gui.getItem(slot);
+				if (actual == null) {
+					continue;
+				}
+
+				int remaining = actual.getAmount() - recipe.getIngredients().get(symbol).getAmount();
+				if (remaining <= 0) {
+					gui.setItem(slot, null);
+				} else {
+					actual.setAmount(remaining);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Заглушка для 25го слота, когда ни один рецепт не совпал - декоративная панель
+	 * вместо воздуха, чтобы слот визуально отличался от "пустого" результата крафта.
+	 */
+	private ItemStack emptyResultPane() {
+		ItemStack pane = new ItemStack(Material.LIGHT_GRAY_STAINED_GLASS_PANE);
+		ItemMeta meta = pane.getItemMeta();
+		meta.setDisplayName(" ");
+		pane.setItemMeta(meta);
+		return pane;
 	}
 }

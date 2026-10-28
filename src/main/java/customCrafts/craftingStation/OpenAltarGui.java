@@ -7,9 +7,12 @@ import org.bukkit.block.Block;
 import org.bukkit.block.Dispenser;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
@@ -103,6 +106,31 @@ public class OpenAltarGui implements Listener {
 	}
 
 	/**
+	 * Запрещает двойной клик (сбор одинаковых предметов со всего инвентаря в курсор) в GUI алтаря,
+	 * пока в 25м слоте лежит реальный результат рецепта: такой клик может забрать его, даже если
+	 * физически кликнули по предмету того же типа в инвентаре игрока, минуя списание ингредиентов
+	 * (дюп). Если в 25м слоте декоративная заглушка (рецепт не собран), защита не нужна.
+	 */
+	@EventHandler
+	public void onCollectToCursor(InventoryClickEvent event) {
+		if (!GUI_NAME.equals(event.getView().getTitle())) {
+			return;
+		}
+
+		if (event.getAction() != InventoryAction.COLLECT_TO_CURSOR) {
+			return;
+		}
+
+		ItemStack resultSlotItem = event.getView().getTopInventory().getItem(25);
+		if (resultSlotItem == null || resultSlotItem.getType() == Material.AIR
+				|| resultSlotItem.getType() == Material.LIGHT_GRAY_STAINED_GLASS_PANE) {
+			return; // рецепт не собран - собирать нечего, можно безопасно разрешить двойной клик
+		}
+
+		event.setCancelled(true);
+	}
+
+	/**
 	 * Запрещает класть предметы в 25й слот GUI алтаря (разрешено только забирать из него).
 	 */
 	@EventHandler
@@ -122,22 +150,48 @@ public class OpenAltarGui implements Listener {
 	}
 
 	/**
-	 * При изменении содержимого крафтовой сетки алтаря (клик по слоту ингредиента) запускает
-	 * проверку рецептов, чтобы обновить результат в 25м слоте.
+	 * При заборе предмета из 25го слота GUI алтаря списывает ингредиенты совпавшего рецепта
+	 * из крафтовой сетки. Приоритет MONITOR, чтобы читать итоговое состояние отмены события
+	 * после {@link #onPlaceItemInCraftSlot} - иначе, например, HOTBAR_SWAP по 25му слоту
+	 * отменяется им (предмет не забирается), но здесь всё равно списал бы ингредиенты.
+	 */
+	@EventHandler(priority = EventPriority.MONITOR)
+	public void onTakeCraftResult(InventoryClickEvent event) {
+		if (!GUI_NAME.equals(event.getView().getTitle())) {
+			return;
+		}
+
+		if (event.getClickedInventory() != event.getView().getTopInventory() || event.getSlot() != 25) {
+			return;
+		}
+
+		if (event.isCancelled()) {
+			return; // забор не состоялся (например, отменён onPlaceItemInCraftSlot)
+		}
+
+		ItemStack result = event.getCurrentItem();
+		if (result == null || result.getType() == Material.AIR
+				|| result.getType() == Material.LIGHT_GRAY_STAINED_GLASS_PANE
+				|| result.getType() == Material.BLACK_STAINED_GLASS_PANE) {
+			return; // слот пуст либо в нём декоративная заглушка "рецепт не собран" - забор уже запрещён onTakeGlassPane
+		}
+
+		Inventory topInventory = event.getView().getTopInventory();
+		// Задержка в 1 тик по той же причине, что и в onCraftingGridChange: забор предмета
+		// применяется к инвентарю после этого события, а не до него.
+		Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> craftingService.consumeIngredientsForResult(topInventory), 1L);
+	}
+
+	/**
+	 * При любом клике в GUI алтаря (включая shift-click из инвентаря игрока в крафтовую сетку
+	 * или из сетки обратно в инвентарь) запускает проверку рецептов, чтобы обновить результат
+	 * в 25м слоте. Не фильтруется по кликнутому инвентарю/слоту, т.к. при shift-click слот
+	 * события относится к инвентарю игрока, а не к сетке алтаря, хотя предмет попадает именно в неё.
 	 */
 	@EventHandler
 	public void onCraftingGridChange(InventoryClickEvent event) {
 		if (!GUI_NAME.equals(event.getView().getTitle())) {
 			return;
-		}
-
-		if (event.getClickedInventory() != event.getView().getTopInventory()) {
-			return;
-		}
-
-		int col = event.getSlot() % 9;
-		if (col == 0 || col >= 6) {
-			return; // клик вне крафтовой сетки (декоративная панель/результат)
 		}
 
 		Inventory topInventory = event.getView().getTopInventory();
@@ -147,8 +201,23 @@ public class OpenAltarGui implements Listener {
 	}
 
 	/**
-	 * При закрытии GUI алтаря выбрасывает на землю все предметы из инвентаря, кроме декоративных
-	 * стеклянных панелей и содержимого слота 25 (крафтового слота).
+	 * Перетаскивание предмета мышью по нескольким слотам сразу (ЛКМ/ПКМ с движением) не порождает
+	 * InventoryClickEvent, поэтому для такого изменения сетки алтаря проверка рецепта запускается отдельно.
+	 */
+	@EventHandler
+	public void onCraftingGridDrag(InventoryDragEvent event) {
+		if (!GUI_NAME.equals(event.getView().getTitle())) {
+			return;
+		}
+
+		Inventory topInventory = event.getView().getTopInventory();
+		Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> craftingService.checkRecipe(topInventory), 1L);
+	}
+
+	/**
+	 * При закрытии GUI алтаря возвращает все предметы из инвентаря (кроме декоративных стеклянных
+	 * панелей и содержимого слота 25 - крафтового слота) в инвентарь игрока, а то, что не влезло,
+	 * выбрасывает на землю.
 	 */
 	@EventHandler
 	public void onCloseAltarGui(InventoryCloseEvent event) {
@@ -171,7 +240,9 @@ public class OpenAltarGui implements Listener {
 				continue;
 			}
 
-			player.getWorld().dropItemNaturally(player.getLocation(), item);
+			for (ItemStack leftover : player.getInventory().addItem(item).values()) {
+				player.getWorld().dropItemNaturally(player.getLocation(), leftover);
+			}
 			inventory.setItem(i, null);
 		}
 	}
