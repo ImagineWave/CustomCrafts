@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class HalloweenRecipe {
+public class HalloweenBedrockRecipe {
 
 	// 'P' - тыквенный пирог (углы), 'J' - тыквенный фонарь (всё остальное).
 	private static final char[][] PATTERN = {

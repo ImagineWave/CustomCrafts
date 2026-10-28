@@ -326,7 +326,6 @@ public class OpenAltarGui implements Listener {
 			if(i%9==0){
 				gui.setItem(i, pane);
 			}
-
 			if(i%9>=6){
 				if(i == 25){
 					gui.setItem(i, fakePane);

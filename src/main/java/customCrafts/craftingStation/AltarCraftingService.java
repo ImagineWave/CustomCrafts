@@ -1,8 +1,8 @@
 package customCrafts.craftingStation;
 
 import customCrafts.Main;
-import customCrafts.craftingStation.recipes.HalloweenRecipe;
-import org.bukkit.Bukkit;
+import customCrafts.craftingStation.recipes.HalloweenBedrockRecipe;
+import customCrafts.craftingStation.recipes.ReinforcedDeepslateBedrockRecipe;
 import org.bukkit.Material;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.Inventory;
@@ -29,7 +29,8 @@ public class AltarCraftingService implements Listener {
 
 	public AltarCraftingService(Main plugin) {
 		this.plugin = plugin;
-		registerRecipe(HalloweenRecipe.create());
+		registerRecipe(ReinforcedDeepslateBedrockRecipe.create());
+		registerRecipe(HalloweenBedrockRecipe.create());
 	}
 
 	public void registerRecipe(AltarRecipe recipe) {
@@ -128,8 +129,11 @@ public class AltarCraftingService implements Listener {
 
 	/**
 	 * Считывает текущее содержимое крафтовой сетки GUI алтаря (через {@link #guiToCraftingGrid}),
-	 * ищет совпадающий рецепт и на следующий тик кладёт его результат в {@link #RESULT_SLOT},
-	 * либо очищает слот, если ни один рецепт не подошёл.
+	 * ищет совпадающий рецепт и сразу кладёт его результат в {@link #RESULT_SLOT}, либо очищает
+	 * слот, если ни один рецепт не подошёл. Вызывающая сторона (клик/драг в {@code OpenAltarGui})
+	 * уже откладывает вызов на 1 тик, чтобы сетка была актуальной - второй отдельный тик здесь
+	 * был лишним и создавал гонку: при быстрых кликах более раннее (устаревшее) отложенное
+	 * обновление результата могло выполниться позже и перезатереть актуальное.
 	 */
 	public void checkRecipe(Inventory gui) {
 		int[][] slotGrid = guiToCraftingGrid(gui);
@@ -137,9 +141,7 @@ public class AltarCraftingService implements Listener {
 
 		Optional<AltarRecipe> match = findMatch(itemGrid);
 
-		Bukkit.getScheduler().runTaskLater(plugin, () ->
-				gui.setItem(RESULT_SLOT, match.map(recipe -> recipe.getResult().clone()).orElse(emptyResultPane())),
-				1L);
+		gui.setItem(RESULT_SLOT, match.map(recipe -> recipe.getResult().clone()).orElse(emptyResultPane()));
 	}
 
 	/**
