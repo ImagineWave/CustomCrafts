@@ -3,6 +3,7 @@ package customCrafts;
 import java.util.ArrayList;
 import java.util.List;
 
+import customCrafts.craftingStation.OpenAltarGui;
 import customCrafts.dimensionalwarp.listener.DimensionalWarpListener;
 import customCrafts.itemStack.*;
 import customCrafts.recipes.QualityOfLifeRecipes;
@@ -35,6 +36,29 @@ public class Main extends JavaPlugin {
 		saveDefaultConfig();
 		dimensionalWarpEnabled = getConfig().getBoolean("dimensional-warp-enabled", true);
 
+		customItemsListeners();
+		relocator();
+		crafts();
+		altar();
+
+		Bukkit.getServer().getPluginManager().registerEvents(CheapFeatherService.getInstance(), this);
+
+		Bukkit.getServer().getPluginManager().registerEvents(new DimensionalWarpListener(this), this);
+
+		CheapFeatherService.getInstance().runTaskTimer(this, 0L, 1*20L);
+
+		QualityOfLifeRecipes qualityOfLifeRecipes = new QualityOfLifeRecipes(this);
+		
+		getCommand("givecustomitem").setExecutor(new GiveCustomItem(this));
+		getCommand("dimensionalwarp").setExecutor(new customCrafts.dimensionalwarp.DimensionalWarpToggleCommand(this));
+	}
+	
+	public void onDisable(){
+		
+	}
+
+
+	private void customItemsListeners(){
 		Bukkit.getServer().getPluginManager().registerEvents(new Chronos(this), this);
 		Bukkit.getServer().getPluginManager().registerEvents(new Reaper(this), this);
 		Bukkit.getServer().getPluginManager().registerEvents(new Totem(this), this);
@@ -46,21 +70,18 @@ public class Main extends JavaPlugin {
 		Bukkit.getServer().getPluginManager().registerEvents(new Remover(this), this);
 		Bukkit.getServer().getPluginManager().registerEvents(new StrongAxe2(this), this);
 		Bukkit.getServer().getPluginManager().registerEvents(new UnlimitedRulebook(this), this);
+	}
 
+	private void relocator(){
 		Bukkit.getServer().getPluginManager().registerEvents(new customCrafts.relocator.RelocatorGUIListener(this), this);
 		Bukkit.getServer().getPluginManager().registerEvents(new customCrafts.relocator.RelocatorOpenGUIandCharge(this), this);
-		Bukkit.getServer().getPluginManager().registerEvents(CheapFeatherService.getInstance(), this);
+	}
 
-		Bukkit.getServer().getPluginManager().registerEvents(new DimensionalWarpListener(this), this);
+	private void altar(){
+		Bukkit.getServer().getPluginManager().registerEvents(new OpenAltarGui(), this);
+	}
 
-
-		CheapFeatherService.getInstance().runTaskTimer(this, 0L, 1*20L);
-		//BukkitTask globalCheck = new StrongAxe(this).runTaskTimer(this, 0, 30L);
-
-		QualityOfLifeRecipes qualityOfLifeRecipes = new QualityOfLifeRecipes(this);
-		
-		getCommand("givecustomitem").setExecutor(new GiveCustomItem(this));
-		getCommand("dimensionalwarp").setExecutor(new customCrafts.dimensionalwarp.DimensionalWarpToggleCommand(this));
+	private void crafts(){
 		craftClock();
 		//craftAngel();
 		craftReaper();
@@ -75,10 +96,6 @@ public class Main extends JavaPlugin {
 		craftRelocator();
 		craftBedrock();
 		craftCheapFeather();
-		}
-	
-	public void onDisable(){
-		
 	}
 	
 	
