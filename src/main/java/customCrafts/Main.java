@@ -3,6 +3,7 @@ package customCrafts;
 import java.util.ArrayList;
 import java.util.List;
 
+import customCrafts.craftingStation.AltarCraftingService;
 import customCrafts.craftingStation.OpenAltarGui;
 import customCrafts.dimensionalwarp.listener.DimensionalWarpListener;
 import customCrafts.itemStack.*;
@@ -78,7 +79,8 @@ public class Main extends JavaPlugin {
 	}
 
 	private void altar(){
-		Bukkit.getServer().getPluginManager().registerEvents(new OpenAltarGui(), this);
+		AltarCraftingService altarCraftingService = new AltarCraftingService(this);
+		Bukkit.getServer().getPluginManager().registerEvents(new OpenAltarGui(altarCraftingService), this);
 	}
 
 	private void crafts(){

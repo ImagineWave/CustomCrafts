@@ -1,5 +1,6 @@
 package customCrafts.craftingStation;
 
+import customCrafts.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -21,6 +22,11 @@ public class OpenAltarGui implements Listener {
 
 	private static final String GUI_NAME = "§5Алтарь";
 	private static final char ANY_BLOCK = '#';
+	private final AltarCraftingService craftingService;
+
+	public OpenAltarGui(AltarCraftingService craftingService) {
+		this.craftingService = craftingService;
+	}
 	// Сопоставление символов схемы с материалами. '#' зарезервирован как "любой блок" и не задаётся здесь.
 	private static final Map<Character, Material> ALTAR_MATERIALS = Map.of(
 			'B', Material.IRON_BLOCK,
@@ -57,7 +63,6 @@ public class OpenAltarGui implements Listener {
 	};
 
 
-
 	/**
 	 * При открытии диспенсера, являющегося центром корректно собранной структуры алтаря,
 	 * отменяет стандартный интерфейс диспенсера и открывает GUI алтаря.
@@ -81,7 +86,8 @@ public class OpenAltarGui implements Listener {
 	}
 
 	/**
-	 * Запрещает забирать декоративные панели BLACK_STAINED_GLASS_PANE из GUI алтаря.
+	 * Запрещает забирать декоративные панели BLACK_STAINED_GLASS_PANE и LIGHT_GRAY_STAINED_GLASS_PANE
+	 * из GUI алтаря.
 	 */
 	@EventHandler
 	public void onTakeGlassPane(InventoryClickEvent event) {
@@ -90,7 +96,8 @@ public class OpenAltarGui implements Listener {
 		}
 
 		ItemStack clicked = event.getCurrentItem();
-		if (clicked != null && clicked.getType() == Material.BLACK_STAINED_GLASS_PANE) {
+		if (clicked != null && (clicked.getType() == Material.BLACK_STAINED_GLASS_PANE
+				|| clicked.getType() == Material.LIGHT_GRAY_STAINED_GLASS_PANE)) {
 			event.setCancelled(true);
 		}
 	}
@@ -112,6 +119,31 @@ public class OpenAltarGui implements Listener {
 			case PLACE_ALL, PLACE_SOME, PLACE_ONE, SWAP_WITH_CURSOR, HOTBAR_SWAP, HOTBAR_MOVE_AND_READD -> event.setCancelled(true);
 			default -> {}
 		}
+	}
+
+	/**
+	 * При изменении содержимого крафтовой сетки алтаря (клик по слоту ингредиента) запускает
+	 * проверку рецептов, чтобы обновить результат в 25м слоте.
+	 */
+	@EventHandler
+	public void onCraftingGridChange(InventoryClickEvent event) {
+		if (!GUI_NAME.equals(event.getView().getTitle())) {
+			return;
+		}
+
+		if (event.getClickedInventory() != event.getView().getTopInventory()) {
+			return;
+		}
+
+		int col = event.getSlot() % 9;
+		if (col == 0 || col >= 6) {
+			return; // клик вне крафтовой сетки (декоративная панель/результат)
+		}
+
+		Inventory topInventory = event.getView().getTopInventory();
+		// Задержка в 1 тик: клик ещё не применён к инвентарю в момент события,
+		// проверка должна идти уже по обновлённому содержимому.
+		Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> craftingService.checkRecipe(topInventory), 1L);
 	}
 
 	/**
@@ -143,14 +175,6 @@ public class OpenAltarGui implements Listener {
 			inventory.setItem(i, null);
 		}
 	}
-
-
-
-
-
-
-
-
 
 
 	/**
@@ -220,9 +244,13 @@ public class OpenAltarGui implements Listener {
 
     private void fillInventory(Inventory gui) {
 		ItemStack pane = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
+		ItemStack fakePane = new ItemStack(Material.LIGHT_GRAY_STAINED_GLASS_PANE);
 		ItemMeta meta = pane.getItemMeta();
 		meta.setDisplayName(" ");
 		pane.setItemMeta(meta);
+		ItemMeta fakePaneMeta = fakePane.getItemMeta();
+		fakePaneMeta.setDisplayName(" ");
+		fakePane.setItemMeta(fakePaneMeta);
 		for (int i = 0; i < gui.getSize(); i++) {
 			if(i%9==0){
 				gui.setItem(i, pane);
@@ -230,10 +258,12 @@ public class OpenAltarGui implements Listener {
 
 			if(i%9>=6){
 				if(i == 25){
-					continue; // дырка для крафта
+					gui.setItem(i, fakePane);
+				} else {
+					gui.setItem(i, pane);
 				}
-				gui.setItem(i, pane);
 			}
 		}
 	}
+
 }
