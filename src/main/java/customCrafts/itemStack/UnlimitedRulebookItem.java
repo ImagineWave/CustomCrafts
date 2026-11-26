@@ -18,6 +18,8 @@ public class UnlimitedRulebookItem {
         meta.addEnchant(Enchantment.VANISHING_CURSE, 1000 , true);
         lore.add("§6Written by BoB4uk76");
         lore.add("§4Выпускает луч");
+        lore.add("§6ЛКМ - смена режима");
+        lore.add("§cРежим: PvP");
         meta.setLore(lore);
         item.setItemMeta(meta);
         return item;
