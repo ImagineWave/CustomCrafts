@@ -26,6 +26,9 @@ public class Main extends JavaPlugin {
 
 	public boolean dimensionalWarpEnabled = true;
 
+	public boolean halloweenCustomRecipes;
+	public boolean newYearCustomRecipes;
+
 
 	public static Main getInstance() {
 		return INSTANCE;
@@ -35,7 +38,7 @@ public class Main extends JavaPlugin {
 	public void onEnable() {
 		INSTANCE = this;
 		saveDefaultConfig();
-		dimensionalWarpEnabled = getConfig().getBoolean("dimensional-warp-enabled", true);
+		loadConfig();
 
 		customItemsListeners();
 		relocator();
@@ -55,7 +58,13 @@ public class Main extends JavaPlugin {
 	}
 	
 	public void onDisable(){
-		
+
+	}
+
+	private void loadConfig() {
+		dimensionalWarpEnabled = getConfig().getBoolean("dimensional-warp-enabled", true);
+		halloweenCustomRecipes = getConfig().getBoolean("halloweenCustomRecipes", false);
+		newYearCustomRecipes = getConfig().getBoolean("newYearCustomRecipes", false);
 	}
 
 

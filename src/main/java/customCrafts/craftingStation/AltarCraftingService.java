@@ -30,7 +30,9 @@ public class AltarCraftingService implements Listener {
 	public AltarCraftingService(Main plugin) {
 		this.plugin = plugin;
 		registerRecipe(ReinforcedDeepslateBedrockRecipe.create());
-		registerRecipe(HalloweenBedrockRecipe.create());
+		if(plugin.halloweenCustomRecipes){
+			registerRecipe(HalloweenBedrockRecipe.create());
+		}
 	}
 
 	public void registerRecipe(AltarRecipe recipe) {
